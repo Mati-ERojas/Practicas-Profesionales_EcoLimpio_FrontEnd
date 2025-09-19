@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --blue: #0084ff
+  --background: #dedede
+  --gray: #8c8c8c
+  --dark-gray: #2f2f2f
+  --yellow: #fffb00
+  --red: #ff3c3c
+  --green: #32ba25
+  --gradient: linear-gradient(90deg, rgba(0, 132, 255, 1) 0%, rgba(0, 95, 184, 1) 40%, rgba(0, 71, 143, 1) 100%);
+}
