@@ -1,0 +1,79 @@
+.container {
+    position: relative;
+    width: 100vw;
+    height: 12vh;
+    background: var(--gradient);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.logo {
+    height: 100%;
+}
+
+.titleSection, .optionsSection {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    height: 100%;
+}
+
+.titleContainer {
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 3px
+}
+
+.titleContainer h1:nth-child(2) {
+    color: black;
+}
+
+.titleSection:hover {
+    cursor: pointer;
+}
+.titleSection:hover .titleContainer h1:nth-child(2) {
+    color: #ffffff;
+}
+
+.icons{
+    color: #ffffff;
+    font-size: 40px;
+}
+
+.icons:hover {
+    cursor: pointer;
+}
+
+.buttonCarrito {
+    position: relative;
+    display: flex;
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    padding: 5px 15px;
+}
+
+.carritoNumber{
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    background: var(--red);
+    color: #ffffff;
+}
+
+.buttonCarrito:hover {
+    cursor: pointer;
+    background-color: #ffffff;
+}
+
+.buttonCarrito:hover span{
+    color: black;
+}

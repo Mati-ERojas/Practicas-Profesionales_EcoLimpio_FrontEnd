@@ -1,15 +1,65 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: 'Lato', sans-serif;
+  box-sizing: border-box;
 }
 
 :root {
-  --blue: #0084ff
-  --background: #dedede
-  --gray: #8c8c8c
-  --dark-gray: #2f2f2f
-  --yellow: #fffb00
-  --red: #ff3c3c
-  --green: #32ba25
+  --blue: #0084ff;
+  --background: #dedede;
+  --gray: #8c8c8c;
+  --dark-gray: #2f2f2f;
+  --yellow: #fffb00;
+  --red: #ff3c3c;
+  --green: #32ba25;
   --gradient: linear-gradient(90deg, rgba(0, 132, 255, 1) 0%, rgba(0, 95, 184, 1) 40%, rgba(0, 71, 143, 1) 100%);
+}
+
+
+/* SWAL */
+
+.custom-popup{
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 40%);
+    border-radius: 20px;
+    display: flex;
+    gap:20px;
+}
+.custom-titulo{
+    color: black;
+}
+.custom-boton-confirmar{
+    background-color: var(--blue);
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    margin-right: 10px;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    width: 150px;
+    padding: 10px 0px;
+}
+.custom-boton-cancelar{
+    background-color: var(--gray);
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    margin-left: 10px;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    width: 150px;
+    padding: 10px 0px;
+}
+
+.custom-boton-confirmar:hover{
+    cursor: pointer;
+}
+
+.custom-boton-cancelar:hover{
+    cursor: pointer;
 }

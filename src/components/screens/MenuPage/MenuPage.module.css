@@ -1,0 +1,54 @@
+.background{
+    width: 100vw;
+    height: 88vh;
+    background: var(--background);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.header p {
+    font-size: 24px;
+}
+
+.optionsContainer {
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+}
+
+.optionContainer{
+    height: 200px;
+    width: 200px;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background: var(--blue);
+    transition: ease-in-out .1s;
+}
+
+.optionContainer:hover {
+    cursor: pointer;
+    scale: 1.1;
+}
+
+.optionContainer h3 {
+    text-align: center;
+}
+
+.icons{
+    color: white;
+    font-size: 100px;
+}
