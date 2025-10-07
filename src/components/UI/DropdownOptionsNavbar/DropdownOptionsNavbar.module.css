@@ -6,7 +6,7 @@
   border-radius: 0px 0px 5px 5px;
   display: flex;
   flex-direction: column;
-  z-index: 100000000;
+  z-index: 100;
 }
 .dropdownOption {
   padding: 10px;

@@ -8,7 +8,7 @@ import type { IUsuario, Rol } from '../../../types/IUsuario'
 
 export const UsersScreen = () => {
     const usuarios = usuarioStore((state) => state.usuarios);
-    const { getUsuarios, addUsuario, enableUnableUsuario, deleteUsuario } = useUsuario();
+    const { getUsuarios, addUsuario, enableDisableUsuario, deleteUsuario } = useUsuario();
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -17,7 +17,7 @@ export const UsersScreen = () => {
     }, [])
 
     const handleToggleUsuario = async (idUsuario: string) => {
-        enableUnableUsuario(idUsuario)
+        enableDisableUsuario(idUsuario)
     }
 
     const handleDeleteUsuario = async (idUsuario: string) => {

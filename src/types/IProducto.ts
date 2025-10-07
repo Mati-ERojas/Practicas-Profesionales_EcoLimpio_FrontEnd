@@ -10,9 +10,9 @@ export interface IProducto {
     descripcion: string;
     marca: string;
     stock: number;
-    porcentajeOferta: number;
+    porcentajeOferta?: number;
     categoria: ICategoria;
     publicId?: string;
     urlImagen?: string;
-    imagen?: File;
+    archivo?: File;
 }

@@ -1,5 +1,5 @@
 import styles from './LoginPage.module.css'
-import logo from '../../../assets/ecoLimpio-Icon.png'
+import logo from '../../../../public/ecoLimpio-Icon.png'
 import { useState } from 'react'
 import { useFormik } from 'formik'
 import { loginFormSchema } from './loginForm.schema'

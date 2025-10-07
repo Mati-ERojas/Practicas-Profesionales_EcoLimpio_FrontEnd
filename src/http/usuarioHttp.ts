@@ -9,6 +9,7 @@ export const getUsuarioByEmailHttp = async (email: string): Promise<IUsuario | u
         return response.data;
     } catch (error) {
         console.error("Problemas en getUsuarioByEmailHttp", error);
+        throw error;
     }
 }
 
@@ -18,6 +19,7 @@ export const getUsuarioByIdHttp = async (idUsuario: string): Promise<IUsuario | 
         return response.data;
     } catch (error) {
         console.error("Problemas en getUsuarioByIdHttp", error)
+        throw error;
     }
 }
 
@@ -27,6 +29,7 @@ export const getUsuariosHttp = async (): Promise<IUsuario[] | undefined> => {
         return response.data;
     } catch (error) {
         console.error("Problemas en getUsuariosHttp", error)
+        throw error;
     }
 }
 
@@ -36,6 +39,7 @@ export const createUsuarioHttp = async (usuario: IUsuario): Promise<IUsuario | u
         return response.data;
     } catch (error) {
         console.error("Problemas en createUsuarioHttp", error)
+        throw error;
     }
 }
 
@@ -45,6 +49,7 @@ export const toggleHabilitadoUsuarioHttp = async (idUsuario: string): Promise<st
         return response.data
     } catch (error) {
         console.error("Problemas en toggleHabilitadoUsuarioHttp", error)
+        throw error;
     }
 }
 
@@ -54,5 +59,6 @@ export const deleteUsuarioHttp = async (idUsuario: string): Promise<string | und
         return response.data;
     } catch (error) {
         console.error("Problemas en deleteUsuarioHttp", error)
+        throw error;
     }
 }

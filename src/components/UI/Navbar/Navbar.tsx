@@ -1,5 +1,5 @@
 import styles from './Navbar.module.css'
-import Logo from '../../../assets/ecoLimpio-Icon.png'
+import Logo from '../../../../public/ecoLimpio-Icon.png'
 import { useState } from 'react'
 import { navigateTo } from '../../../routes/navigation'
 import { CustomSwal } from '../CustomSwal/CustomSwal'

@@ -1,0 +1,116 @@
+.modal {
+    border: 2px solid rgba(0, 0, 0, .4);
+    border-radius: 5px;
+    background: white;
+    width: 80%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.tablaContainer{
+    position: relative;
+    width: 100%;
+    height: 30vh;
+    max-height: 30vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    overflow-y: scroll;
+}
+.tablaContainer::-webkit-scrollbar {
+    width: 5px;
+}
+.tablaContainer::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 40%);
+    border-radius: 5px;
+}
+.tablaContainer::-webkit-scrollbar-thumb {
+    background: var(--blue);
+    border-radius: 5px;
+}
+
+.tabla {
+    width: 99%;
+    border-collapse: collapse;
+    font-size: 16px;
+}
+
+/* Header de la tabla */
+.tablaHeader tr th {
+    position: sticky;
+    top: 0;
+    background-color: black;
+    color: white;
+    font-weight: lighter;
+    padding: 5px;
+    height: 20px;          /* alto fijo del header */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tablaHeader tr th:not(:last-child) {
+    border-right: 1px solid white;
+}
+
+/* Filas de la tabla */
+tr:nth-child(even) {
+    background-color: #369eff;
+    text-align: center;
+}
+
+tr:nth-child(odd) {
+    background-color: white;
+    text-align: center;
+}
+
+/* Celdas */
+td {
+    height: 20px;              /* alto fijo */
+    max-width: 150px;          /* ancho máximo */
+    padding: 5px 10px;
+    border: 1px solid white;
+
+    white-space: nowrap;       /* sin salto de línea */
+    overflow-x:auto;       /* oculta el exceso de texto */
+}
+
+td::-webkit-scrollbar {
+    display:none;
+}
+
+/* Bordes de las celdas */
+td:first-child {
+    border-left: none;
+}
+td:last-child {
+    border-right: none;
+}
+tr:last-child td {
+    border-bottom: none;
+}
+
+.buttonsContainer {
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.buttonsContainer button {
+    background: var(--blue);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 30px;
+    transition: ease-in-out .1s;
+    font-size: 15px;
+}
+
+.buttonsContainer button:hover {
+    cursor: pointer;
+    transform: translateY(-3px);
+}

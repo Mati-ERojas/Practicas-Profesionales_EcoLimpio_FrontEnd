@@ -78,7 +78,7 @@ export const useUsuario = () => {
         }
     }
 
-    const enableUnableUsuario = async (idUsuario: string): Promise<void> => {
+    const enableDisableUsuario = async (idUsuario: string): Promise<void> => {
         try {
             await toggleHabilitadoUsuarioHttp(idUsuario);
             await getUsuarios();
@@ -100,11 +100,12 @@ export const useUsuario = () => {
 
             if (result.isConfirmed) {
                 const success = await deleteUsuarioHttp(idUsuario);
-                if (success) { eliminarUsuario(idUsuario); getUsuarios(); }
+                if (success) { eliminarUsuario(idUsuario); }
             } else {
                 return;
             }
         } catch (error) {
+            CustomSwal.fire("Error", "No se pudo eliminar el usuario", "error");
             console.error('Error en deleteUsuario', error)
         }
     }
@@ -113,7 +114,7 @@ export const useUsuario = () => {
         getUsuarioById,
         getUsuarios,
         addUsuario,
-        enableUnableUsuario,
+        enableDisableUsuario,
         deleteUsuario
     }
 }

@@ -1,7 +1,7 @@
 import type { IProducto } from "./IProducto";
 import type { IUsuario } from "./IUsuario";
 
-export type TipoMovimiento = "VENTA" | "AJUSTE" | "DECOMISO" | "ROBO" | "ROTURA" | "VENCIMIENTO" | "CIERRECAJA"
+export type TipoMovimiento = "VENTA" | "INGRESO" | "AJUSTE" | "DECOMISO" | "ROBO" | "ROTURA" | "VENCIMIENTO" | "CIERRECAJA"
 export interface IMovimiento {
     id?: string;
     habilitado?: boolean;

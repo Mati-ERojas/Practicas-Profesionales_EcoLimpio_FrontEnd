@@ -1,5 +1,5 @@
 import styles from './LoadingScreen.module.css'
-import banner from '../../../assets/ecoLimpio-Banner.jpg'
+import banner from '../../../../public/ecoLimpio-Banner.jpg'
 
 export const LoadingScreen = () => {
     return (
