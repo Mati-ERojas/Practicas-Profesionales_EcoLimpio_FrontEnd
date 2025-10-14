@@ -1,22 +1,34 @@
+import axios from "axios";
 import type { IProducto } from "../types/IProducto"
 import axiosAuth from './axios.config.ts'
 
 
 const apiUrlHttp = '/productos'
+const apiUrlNoAuth = import.meta.env.VITE_API_URL + "/productos";
 
 export const getProductosHttp = async (): Promise<IProducto[] | undefined> => {
     try {
         const response = await axiosAuth.get<IProducto[]>(apiUrlHttp);
-        return response.data
+        return response.data;
     } catch (error) {
-        console.error('Problemas en getProductosHttp', error)
+        console.error('Problemas en getProductosHttp', error);
+        throw error;
+    }
+}
+
+export const getProductosHabilitadosHttp = async (): Promise<IProducto[] | undefined> => {
+    try {
+        const response = await axios.get<IProducto[]>(apiUrlNoAuth + '/getEnabled');
+        return response.data;
+    } catch (error) {
+        console.error('Problemas en getProductosHabilitadosHttp', error);
         throw error;
     }
 }
 
 export const createProductoHttp = async (producto: IProducto): Promise<IProducto | undefined> => {
     try {
-        const response = await axiosAuth.post<IProducto>(apiUrlHttp, producto)
+        const response = await axiosAuth.post<IProducto>(apiUrlHttp, producto);
         return response.data;
     } catch (error) {
         console.error("Problemas en createProductoHttp", error);

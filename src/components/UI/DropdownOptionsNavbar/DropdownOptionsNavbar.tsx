@@ -49,8 +49,8 @@ export const DropdownOptionsNavbar = () => {
     }, [])
     return (
         <div className={styles.dropdownContainer} >
-            {dropdownOptions.map((option) => (
-                <div className={styles.dropdownOption} onClick={() => navigateTo(`/${option.url}`)} >
+            {dropdownOptions.map((option, i) => (
+                <div className={styles.dropdownOption} onClick={() => navigateTo(`/${option.url}`)} key={i}>
                     <p>{option.nombre}</p>
                 </div>
             ))}

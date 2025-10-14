@@ -22,11 +22,16 @@ export const useMovimiento = () => {
         }
     }
 
-    const createMovimiento = async (movimiento: IMovimiento) => {
+    const createMovimiento = async (movimiento: IMovimiento): Promise<boolean | undefined> => {
         try {
             const data = await createMovimientoHttp(movimiento);
+            if (!data) {
+                return false;
+            }
+            return true;
         } catch (error) {
             console.error("Error en createMovimiento", error)
+            return false;
         }
     }
 

@@ -1,0 +1,74 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.container:last-child hr {
+    display: none;
+}
+
+.detalleItem {
+    position: relative;
+    display:flex;
+    align-items: center;
+    width: 100%;
+}
+
+.detalleInfo {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    gap: 5px;
+    font-size: 16px;
+}
+.detalleNombre {
+    white-space: nowrap;
+    overflow-x:auto;
+}
+.precioContainer{
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    font-weight: bold;
+}
+.productoPrecioDescuento{
+    color: rgba(0, 0, 0, 40%);
+    text-decoration: line-through;
+}
+
+
+.detalleDynamicInfo {
+    display: flex;
+    width: fit-content;
+    gap: 20px;
+}
+.inputCantidad{
+    width: 50px;
+    height: fit-content;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 40%);
+    border-radius: 5px;
+}
+.inputCantidad::-webkit-inner-spin-button,
+.inputCantidad::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.removeButton {
+    position: absolute;
+    right: 0;
+    background-color: var(--red);
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+    color: white;
+    transition: ease-in-out .1s;
+}
+.removeButton:hover {
+    cursor: pointer;
+    scale: 1.05;
+}

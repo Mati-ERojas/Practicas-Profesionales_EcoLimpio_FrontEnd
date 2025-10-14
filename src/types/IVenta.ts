@@ -5,10 +5,10 @@ export type Estado = "ABIERTO" | "CERRADO"
 export interface IVenta {
     id?: string;
     habilitado?: boolean;
-    recibo: number;
+    recibo?: number;
     fecha: string;
-    estado: Estado;
+    estado?: Estado;
     total: number;
     vendedor: IUsuario;
-    cierreCaja: ICierreCaja;
+    cierreCaja?: ICierreCaja;
 }

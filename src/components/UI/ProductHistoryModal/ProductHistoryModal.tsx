@@ -79,7 +79,7 @@ export const ProductHistoryModal: FC<IProductHistoryModalProps> = ({ setOpenModa
                                     <td>{m.producto?.titulo}</td>
                                     <td>{m.tipo}</td>
                                     <td>{m.cantidad}</td>
-                                    <td>$ {m.total}</td>
+                                    <td>$ {m.total?.toLocaleString('es-AR')}</td>
                                     <td>{m.usuario.nombre}</td>
                                 </tr>
                             ))}

@@ -51,8 +51,10 @@ export const EditStockModal: FC<IEditStockModalProps> = ({ setOpenModalStock }) 
                 usuario: usuarioLogeado!,
                 producto: productoActivo!,
             }
-            const success = await updateProducto(stockValues);
             const mSuccess = await createMovimiento(movimientoValues);
+            if (mSuccess) {
+                await updateProducto(stockValues);
+            }
             setOpenModalStock(false)
             setLoading(false)
         }

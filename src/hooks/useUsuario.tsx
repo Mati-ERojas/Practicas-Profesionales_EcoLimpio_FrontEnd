@@ -28,8 +28,6 @@ export const useUsuario = () => {
             }
             localStorage.setItem('usuarioLogeado', usuario.id!)
             setUsuarioLogeado(usuario)
-
-            console.log(usuario)
             return true;
         } catch (error) {
             console.error("Error en loginUsuario: ", error);
