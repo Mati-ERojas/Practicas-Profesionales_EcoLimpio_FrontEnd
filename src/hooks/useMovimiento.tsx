@@ -1,4 +1,5 @@
-import { createMovimientoHttp, getMovimientosByProductoHttp, getMovimientosByUsuarioHttp } from "../http/movimientoHttp";
+import { createMovimientoHttp, filtrarMovimientosHttp, getMovimientosByProductoHttp, getMovimientosByUsuarioHttp } from "../http/movimientoHttp";
+import type { IFiltroMovimientos } from "../types/IFiltroMovimientos";
 import type { IMovimiento } from "../types/IMovimiento";
 
 
@@ -35,9 +36,21 @@ export const useMovimiento = () => {
         }
     }
 
+    const filtrarMovimientos = async (filtro: IFiltroMovimientos): Promise<IMovimiento[] | undefined> => {
+        try {
+            const data = await filtrarMovimientosHttp(filtro);
+            if (data) {
+                return data;
+            }
+        } catch (error) {
+            console.error("Error en filtrarMovimientos", error)
+        }
+    }
+
     return {
         getMovimientosByUsuario,
         getMovimientosByProducto,
-        createMovimiento
+        createMovimiento,
+        filtrarMovimientos
     }
 }

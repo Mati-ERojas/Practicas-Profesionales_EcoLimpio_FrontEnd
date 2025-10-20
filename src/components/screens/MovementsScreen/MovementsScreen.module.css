@@ -1,0 +1,83 @@
+.background {
+    width: 100vw;
+    height: 88vh;
+    background: var(--background);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.header p {
+    font-size: 18px;
+}
+
+.headerForm {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.headerLeft {
+    position: absolute;
+    left: 0;
+}
+.headerRight {
+    position: absolute;
+    right: 0;
+}
+
+.filters {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.groupedFilters {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inputs {
+    width: 150px;
+    font-size: 16px;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 40%);
+    border-radius: 5px;
+    padding: 3px;
+}
+
+.inputWrapper {
+    display:flex;
+    align-items: center;
+    position: relative;
+    width: 100%
+}
+
+.downloadButton {
+    justify-content: center;
+    align-items: center;
+    padding: 5px 20px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: ease-in-out .1s;
+}
+.downloadButton:hover {
+    scale: 1.1;
+    cursor: pointer;
+}
