@@ -1,0 +1,122 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 50px;
+}
+
+.cierreContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.cierreContainerHeader {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    background: black;
+    color: white;
+    padding: 5px;
+    font-size: 18px;
+    transition: .3s ease-in;
+}
+
+.cierreContainerHeader:hover {
+    filter:brightness(.7) ;
+    cursor: pointer;
+}
+
+/* TABLA */
+.tablaContainer{
+    position: relative;
+    width: 100%;
+    max-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    overflow-y: auto;
+}
+.tablaContainer::-webkit-scrollbar {
+    display:none;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+}
+
+/* Header de la tabla */
+.tablaHeader tr th {
+    position: sticky;
+    top: 0;
+    background-color: black;
+    color: white;
+    font-weight: lighter;
+    padding: 10px;
+    height: 20px;          /* alto fijo del header */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tablaHeader tr th:not(:last-child) {
+    border-right: 1px solid white;
+}
+
+/* Filas de la tabla */
+tr:nth-child(even) {
+    background-color: #369eff;
+    text-align: center;
+}
+
+tr:nth-child(odd) {
+    background-color: white;
+    text-align: center;
+}
+
+/* Celdas */
+td {
+    height: 20px;              /* alto fijo */
+    max-width: 150px;          /* ancho máximo */
+    padding: 5px 10px;
+    border: 1px solid white;
+
+    white-space: nowrap;       /* sin salto de línea */
+    overflow-x:auto;       /* oculta el exceso de texto */
+}
+
+td::-webkit-scrollbar {
+    display:none;
+}
+
+.tdAcciones {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.tdAcciones span {
+    transition: ease-in-out .1s;
+}
+
+.tdAcciones span:hover {
+    cursor: pointer;
+}
+
+/* Bordes de las celdas */
+td:first-child {
+    border-left: none;
+}
+td:last-child {
+    border-right: none;
+}
+tr:last-child td {
+    border-bottom: none;
+}
+
+.hoverableColumns :hover {
+    cursor: pointer;
+}

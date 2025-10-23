@@ -7,15 +7,62 @@ import { usuarioStore } from '../../../store/usuarioStore'
 import { useFormik } from 'formik'
 import type { IFiltroMovimientos } from '../../../types/IFiltroMovimientos'
 import { useUsuario } from '../../../hooks/useUsuario'
+import * as XLSX from 'xlsx'
+import { saveAs } from 'file-saver'
+import type { IUsuario } from '../../../types/IUsuario'
 
 export const MovementsScreen = () => {
     const [firstRender, setFirstRender] = useState(true)
 
     const usuarios = usuarioStore((state) => state.usuarios)
-    const { getUsuarios } = useUsuario()
+    const { getUsuarios, getUsuarioById } = useUsuario()
+    const [usuarioFiltrado, setUsuarioFiltrado] = useState<IUsuario | null>(null)
 
     const { filtrarMovimientos } = useMovimiento()
     const [movimientos, setMovimientos] = useState<IMovimiento[]>([])
+
+    const exportToExcel = (movimientos: IMovimiento[]) => {
+        const getPrecioUnitario = (m: IMovimiento) => {
+            if (m.tipo === 'CIERRECAJA') return '-';
+            if (!m.producto) return '-';
+            if (m.tipo !== 'VENTA') return `$ ${m.producto.precioCompra.toLocaleString('es-AR')}`;
+            if (m.producto.porcentajeOferta) {
+                const precioConOferta = m.producto.precioVenta - (m.producto.precioVenta * (m.producto.porcentajeOferta / 100));
+                return `$ ${precioConOferta.toLocaleString('es-AR')}`;
+            }
+            return `$ ${m.producto.precioVenta.toLocaleString('es-AR')}`;
+        };
+        // Crear array de datos
+        const datos = movimientos.map((m) => ({
+            Fecha: new Date(m.fecha).toLocaleDateString('es-AR'),
+            Tipo: m.tipo,
+            SKU: m.producto ? m.producto.sku : '-',
+            Producto: m.producto ? m.producto.titulo : '-',
+            Cantidad: m.cantidad ? m.cantidad : '-',
+            Precio_unitario: getPrecioUnitario(m),
+            Total: m.total ? `$ ${m.total.toLocaleString('es-AR')}` : '-'
+        }))
+
+        // Crear hoja de Excel
+        const ws = XLSX.utils.json_to_sheet(datos);
+
+        // Crear libo de Excel y agregar la hoja
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Movimientos')
+
+        // Generar archivo Excel y descargarlo
+        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
+        const data = new Blob([excelBuffer], { type: 'application/octet-stream' })
+        saveAs(data, `Movimientos_${usuarioFiltrado?.nombre}.xlsx`)
+    }
+
+    const handleExportToExcel = () => {
+        if (movimientos) {
+            exportToExcel(movimientos)
+        } else {
+            alert('No hay movimientos')
+        }
+    }
 
     const handleGetMovimientos = async (movimientos: IMovimiento[]) => {
         if (movimientos && movimientos.length > 0) {
@@ -76,10 +123,22 @@ export const MovementsScreen = () => {
         formik.values.fechaMax,
     ]);
 
+    const handleGetUsuarioFiltrado = async () => {
+        const usuario = await getUsuarioById(formik.values.idUsuario!)
+        setUsuarioFiltrado(usuario!)
+    }
+    useEffect(() => {
+        if (formik.values.idUsuario && formik.values.idUsuario.length > 0) {
+            handleGetUsuarioFiltrado()
+        } else {
+            setUsuarioFiltrado(null)
+        }
+    }, [formik.values.idUsuario])
+
     return (
         <div className={styles.background}>
             <div className={styles.header}>
-                <h2>Movimientos</h2>
+                <h2>{usuarioFiltrado ? `Movimientos de: ${usuarioFiltrado.nombre}` : 'Movimientos'}</h2>
                 <p>Total general: $</p>
                 <form className={styles.headerForm} onSubmit={formik.handleSubmit}>
                     <div className={styles.headerLeft}>
@@ -194,7 +253,7 @@ export const MovementsScreen = () => {
                         </div>
                     </div>
                     <div className={styles.headerRight}>
-                        <button className={styles.downloadButton}>Descargar Excel</button>
+                        <button className={styles.downloadButton} onClick={() => handleExportToExcel()}>Descargar Excel</button>
                     </div>
                 </form>
             </div>
