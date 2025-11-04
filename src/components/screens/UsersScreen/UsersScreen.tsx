@@ -48,6 +48,16 @@ export const UsersScreen = () => {
             setLoading(false)
         }
     })
+
+    const [erase, setErase] = useState(false)
+
+    useEffect(() => {
+        if (!erase) return;
+        const timeout = setTimeout(() => {
+            setErase(false);
+        }, 500);
+        return () => clearTimeout(timeout);
+    }, [erase]);
     return (
         <div className={styles.background}>
             <div className={styles.header}>
@@ -163,8 +173,8 @@ export const UsersScreen = () => {
                         </div>
                         <div className={styles.buttonsContainer}>
                             <button type='submit' className={styles.acceptButton} disabled={!(formik.isValid && formik.dirty) || loading} >Crear usuario</button>
-                            <button type='reset' disabled={loading} className={styles.resetButton} onClick={() => formik.resetForm()} >
-                                {loading ? <div className={styles.spinner}></div> : <span className='material-icons'>replay</span>}
+                            <button type='reset' disabled={loading} className={styles.resetButton} onClick={() => { setErase(true); formik.resetForm() }} >
+                                {loading ? <div className={styles.spinner}></div> : <span className={`material-icons ${erase ? styles.erase : ''}`}>replay</span>}
                             </button>
                         </div>
                     </form>

@@ -35,6 +35,7 @@ export const EditStockModal: FC<IEditStockModalProps> = ({ setOpenModalStock }) 
                 stock: productoActivo!.stock + values.stock!,
                 sku: productoActivo!.sku,
                 titulo: productoActivo!.titulo,
+                porcentajeOferta: productoActivo!.porcentajeOferta,
                 precioCompra: productoActivo!.precioCompra,
                 precioVenta: productoActivo!.precioVenta,
                 descripcion: productoActivo!.descripcion,

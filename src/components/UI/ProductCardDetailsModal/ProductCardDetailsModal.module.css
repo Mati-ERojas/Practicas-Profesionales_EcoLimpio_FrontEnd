@@ -1,0 +1,104 @@
+.modal {
+    border: 2px solid rgba(0, 0, 0, .4);
+    border-radius: 5px;
+    background: white;
+    width: 25%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modalHeader {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 50%;
+    padding-top: 5px;
+    gap: 5px;
+}
+
+.imgContainer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 75%;
+}
+
+.modalHeader p {
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.modalBody {
+    width: 100%;
+    height: 50%
+}
+
+.tagsContainer {
+    height:15%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.tag {
+    text-align: center;
+    width:100%;
+    color: black;
+    padding: 5px;
+}
+.tag:hover {
+    cursor: pointer;
+}
+
+.activeTag {
+    background: var(--blue);
+    border-radius: 5px 5px 0px 0px;
+    color: white;
+}
+
+.bodyContent {
+    height:85%;
+    border: 3px solid var(--blue);
+    border-radius: 0px 0px 3px 3px;
+    padding: 5px;
+}
+
+.descriptionContent {
+    max-height: 100%;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.descriptionContent p {
+    overflow-wrap: break-word;
+    white-space: normal;
+    width: 100%;
+    padding-right: 1px;
+}
+
+.descriptionContent::-webkit-scrollbar {
+    width: 3px;  /* altura de la barra */
+}
+.descriptionContent::-webkit-scrollbar-thumb {
+    background: var(--blue);
+    border-radius: 5px;
+}
+.descriptionContent::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 30%);
+    border-radius: 5px;
+}
+
+.infoContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

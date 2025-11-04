@@ -1,0 +1,53 @@
+.carousel {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.viewport {
+    overflow: hidden;
+    width: 100%;
+}
+
+.track {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.track.centered {
+    justify-content: center;
+}
+
+.slide {
+    flex: 0 0 calc(100% / var(--visible-count, 1));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    border-radius: 100%;
+    border: none;
+    cursor: pointer;
+    color: var(--dark-gray);
+    user-select: none;
+    padding: 5px;
+    margin: 5px;
+    opacity: 1;
+}
+
+.arrow.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.arrow:hover {
+    color: black;
+}

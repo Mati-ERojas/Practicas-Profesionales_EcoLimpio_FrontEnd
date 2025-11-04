@@ -5,8 +5,13 @@ import { navigateTo } from '../../../routes/navigation'
 import { CustomSwal } from '../CustomSwal/CustomSwal'
 import { usuarioStore } from '../../../store/usuarioStore'
 import { DropdownOptionsNavbar } from '../DropdownOptionsNavbar/DropdownOptionsNavbar'
+import { carritoStore } from '../../../store/carritoStore'
+import { ShoppingCartDropdown } from '../ShoppingCartDropdown/ShoppingCartDropdown'
+
 export const Navbar = () => {
-    const [contador, setContador] = useState(0)
+    const carritoLength = carritoStore((state) => state.carrito.length)
+    const [openCarrito, setOpenCarrito] = useState(false)
+
     const [openDropdown, setOpenDropdown] = useState(false)
     const usuarioLogged = usuarioStore((state) => state.usuarioLogeado);
     const setUsuarioLogeado = usuarioStore((state) => state.setUsuarioLogeado);
@@ -43,13 +48,14 @@ export const Navbar = () => {
             ) : (
                 <div className={styles.optionsSection}>
                     <span className={`material-icons ${styles.icons}`} onClick={handleNavigateToLogin}>login</span>
-                    <div className={styles.buttonCarrito} onClick={() => { setContador(contador + 1) }}>
-                        <div className={styles.carritoNumber}>{contador}</div>
+                    <div className={`${styles.buttonCarrito} ${openCarrito ? styles.active : ''}`} onClick={() => { setOpenCarrito(!openCarrito) }}>
+                        <div className={styles.carritoNumber}>{carritoLength}</div>
                         <span className={`material-icons ${styles.icons}`}>shopping_cart</span>
                     </div>
                 </div>
             )}
             {openDropdown && <DropdownOptionsNavbar />}
+            {openCarrito && <ShoppingCartDropdown />}
         </div>
     )
 }

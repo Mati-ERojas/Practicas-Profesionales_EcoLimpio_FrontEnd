@@ -1,0 +1,149 @@
+.dropdownContainer {
+    position: absolute;
+    left: 0;
+    top: 12vh;
+    width: 100vw;
+    height: fit-content;
+    background: white;
+    border-radius: 0px 0px 5px 5px;
+    z-index: 9999;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 10%);
+}
+
+
+
+.bigHr {
+    width:100%;
+    height: 3px;
+    background: black;
+    border-radius: 5px;
+}
+
+.buttonsContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
+.buttonsContainer button:enabled{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    background: var(--green);
+    transition: .1s ease-in-out;
+}
+
+.buttonsContainer button:enabled:hover{
+    cursor:pointer;
+    filter:brightness(90%);
+}
+
+.buttonsContainer button:disabled{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    background: var(--gray);
+}
+
+@keyframes slideDown {
+    from {
+        height: 0;
+    }
+    to {
+        height: 300px;
+    }
+}
+
+/* ITEMS */
+.itemsList{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 150px;
+    overflow-y: scroll;
+}
+
+.itemsList::-webkit-scrollbar {
+    width: 3px;  /* altura de la barra */
+}
+.itemsList::-webkit-scrollbar-thumb {
+    background: var(--blue);
+    border-radius: 5px;
+}
+.itemsList::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 30%);
+    border-radius: 5px;
+}
+
+.itemContainer {
+    width: 100%;
+    padding-right: 10px;
+}
+
+.itemContainer:last-child hr {
+    display: none;
+}
+
+.item {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.inputContainer {
+    position: absolute;
+    left: 40%;
+    display: flex;
+    gap: 5px;
+}
+
+.inputContainer input {
+    background: none;
+    border: none;
+    text-align: center;
+    outline: none;
+}
+
+.inputContainer span {
+    color: var(--red);
+    font-weight: bold;
+}
+
+.inputContainer span:hover {
+    cursor: pointer;
+}
+
+.deleteButton {
+    transition: .1s ease-in-out;
+}
+.deleteButton:hover {
+    cursor: pointer;
+    text-shadow:  0 0  20px red
+}
+
+.erase {
+    animation: rotate .5s ease-out forwards;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}

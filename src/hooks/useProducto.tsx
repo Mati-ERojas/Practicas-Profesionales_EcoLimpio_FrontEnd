@@ -1,6 +1,6 @@
 import { useShallow } from "zustand/shallow"
 import { productoStore } from "../store/productoStore"
-import { createProductoHttp, deleteProductoHttp, getProductosHabilitadosHttp, getProductosHttp, toggleHabilitadoProductoHttp, updateImagenProductoHttp, updateProductoHttp } from "../http/productoHttp"
+import { createProductoHttp, deleteProductoHttp, getProductosByCategoriaIdHttp, getProductosHabilitadosHttp, getProductosHttp, toggleHabilitadoProductoHttp, updateImagenProductoHttp, updateProductoHttp } from "../http/productoHttp"
 import type { IProducto } from "../types/IProducto"
 import { CustomSwal } from "../components/UI/CustomSwal/CustomSwal"
 import type { IMovimiento, TipoMovimiento } from "../types/IMovimiento"
@@ -38,6 +38,19 @@ export const useProducto = () => {
             }
         } catch (error) {
             console.error('Error en getProductosHabilitados', error)
+        }
+    }
+
+    const getProductosByCategoriaId = async (categoriaId: string): Promise<IProducto[] | undefined> => {
+        try {
+            const data = await getProductosByCategoriaIdHttp(categoriaId);
+            if (data) {
+                return data;
+            } else {
+                return [];
+            }
+        } catch (error) {
+            console.error('Error en getProductosByCategoriaId', error)
         }
     }
 
@@ -134,6 +147,7 @@ export const useProducto = () => {
     return {
         getProductos,
         getProductosHabilitados,
+        getProductosByCategoriaId,
         createProducto,
         updateProducto,
         updateImagenProducto,

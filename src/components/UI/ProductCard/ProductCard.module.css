@@ -1,0 +1,171 @@
+.cardContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 10px;
+    background: white;
+    min-width: 150px;
+    width: 15vw;
+    height: 250px;
+    gap: 5px;
+    transition: scale .3s ease-in-out;
+}
+.cardContainer:hover {
+    scale: 1.01;
+}
+
+.cardContent {
+    width: 100%;
+    height: 85%;
+}
+
+.imgContainer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 60%;
+}
+
+.imgContainer:hover{
+    cursor: pointer;
+}
+
+.titleContainer {
+    width: 100%;
+    height: 15%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.titleContainer p {
+    width: 100%;
+    text-align: center;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.priceContainer {
+    display:flex;
+    width: 100%;
+    height: 25%;
+    justify-content: center;
+    align-items: center;
+}
+
+.priceContainer p {
+    text-align: center;
+}
+
+.onSalePrice {
+    font-size: 12px;
+    color: var(--gray);
+    text-decoration: line-through;
+}
+.onSaleDiscountedPrice {
+    width: 100%;
+    background: var(--yellow);
+}
+
+.cardButtons {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardButtons button {
+    width: 45%;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: opacity .3s ease-in-out, width .3s ease-in-out;
+    align-items: center;
+    outline: none;
+}
+.cardButtons button:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+
+.addButton {
+    background: var(--blue);
+}
+
+.activeAddButton {
+    background: var(--blue);
+    width: 100% !important;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.activeAddButton:hover {
+    cursor:default !important;
+    opacity: 1 !important;
+}
+
+.activeAddButton p {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.activeAddButton p:hover {
+    cursor:pointer;
+}
+
+.buttonHr{
+    background: white;
+    height: 80%;
+    width: 1px;
+}
+
+.inputContainer {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    padding: 0px 5px 0px 5px;
+    gap: 5px;
+}
+.inputContainer input{
+    width: 50%;
+    border: none;
+    outline: none;
+    background: none;
+    color: white;
+    text-align: center;
+}
+
+.inputButton {
+    color: white;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.inputButton:hover {
+    cursor: pointer;
+    scale: 1.1;
+}
+
+.detailsButton {
+    background: var(--gray);
+}
+
+.onSaleTag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--red);
+    color: white;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+}

@@ -26,6 +26,16 @@ export const getProductosHabilitadosHttp = async (): Promise<IProducto[] | undef
     }
 }
 
+export const getProductosByCategoriaIdHttp = async (categoriaId: string): Promise<IProducto[] | undefined> => {
+    try {
+        const response = await axios.get<IProducto[]>(apiUrlNoAuth + `/categorias/${categoriaId}`)
+        return response.data;
+    } catch (error) {
+        console.error("Problemas en getProductosByCategoriaIdHtttp", error)
+        throw error;
+    }
+}
+
 export const createProductoHttp = async (producto: IProducto): Promise<IProducto | undefined> => {
     try {
         const response = await axiosAuth.post<IProducto>(apiUrlHttp, producto);

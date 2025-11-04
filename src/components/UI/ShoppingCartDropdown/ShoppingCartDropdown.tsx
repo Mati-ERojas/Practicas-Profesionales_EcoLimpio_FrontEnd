@@ -1,0 +1,96 @@
+import { useShallow } from 'zustand/shallow'
+import { carritoStore } from '../../../store/carritoStore'
+import styles from './ShoppingCartDropdown.module.css'
+import type { ICarritoItem } from '../../../types/ICarritoItem'
+import type { IProducto } from '../../../types/IProducto'
+import { useEffect, useState } from 'react'
+
+export const ShoppingCartDropdown = () => {
+    const { carrito, setCarrito, actualizarItem, eliminarItem } = carritoStore(useShallow((state) => ({
+        carrito: state.carrito,
+        setCarrito: state.setCarrito,
+        actualizarItem: state.actualizarItem,
+        eliminarItem: state.eliminarItem
+    })))
+
+    const calculateTotal = () => carrito.reduce((acc, item) => acc + item.subtotal, 0);
+
+    const calculateSubtotal = (producto: IProducto, cantidad: number): number => {
+        if (producto.porcentajeOferta) {
+            return ((producto.precioVenta - (producto.precioVenta * producto.porcentajeOferta / 100)) * cantidad)
+        } else {
+            return producto.precioVenta * cantidad
+        }
+    }
+
+    const handleChangeCantidad = (item: ICarritoItem, nuevaCantidad: number) => {
+        if (nuevaCantidad < 1) nuevaCantidad = 1;
+        if (nuevaCantidad > item.producto.stock) nuevaCantidad = item.producto.stock;
+        const itemActualizado: ICarritoItem = {
+            id: item.id,
+            cantidad: nuevaCantidad,
+            producto: item.producto,
+            subtotal: calculateSubtotal(item.producto, nuevaCantidad)
+        }
+        actualizarItem(itemActualizado);
+    };
+
+    const [erase, setErase] = useState(false)
+
+    useEffect(() => {
+        if (!erase) return;
+        const timeout = setTimeout(() => {
+            setErase(false);
+        }, 500);
+        return () => clearTimeout(timeout);
+    }, [erase]);
+
+    return (
+        <div className={styles.dropdownContainer}>
+            <h3>Mis Compras</h3>
+            <div className={styles.itemsList}>
+                {carrito.map((item) => (
+                    <div className={styles.itemContainer}>
+                        <div className={styles.item}>
+                            <div className={styles.productInfo}>
+                                <p>{item.producto.titulo}</p>
+                                <p>(SKU: {item.producto.sku})</p>
+                            </div>
+                            <div className={styles.inputContainer}>
+                                <span style={{ userSelect: 'none' }} className={styles.inputButton} onClick={() => handleChangeCantidad(item, item.cantidad - 1)}>-</span>
+                                <input
+                                    type='number'
+                                    value={item.cantidad}
+                                    min={1}
+                                    max={item.producto.stock}
+                                    onChange={(e) => {
+                                        handleChangeCantidad(item, Number(e.target.value))
+                                    }}
+                                />
+                                <span style={{ userSelect: 'none' }} className={styles.inputButton} onClick={() => handleChangeCantidad(item, item.cantidad + 1)}>+</span>
+                            </div>
+                            <p style={{ position: 'absolute', left: '60%' }}>Subtotal: $ {item.subtotal.toLocaleString('es-AR')}</p>
+                            <p
+                                className={styles.deleteButton}
+                                style={{ position: 'absolute', left: '90%', color: 'var(--red)', userSelect: 'none' }}
+                                onClick={() => eliminarItem(item.id)}
+                            >Eliminar</p>
+                        </div>
+                        <hr />
+                    </div>
+                ))}
+            </div>
+            <div className={styles.bigHr} />
+            <p style={{ fontWeight: 'bold', fontSize: '14px', textAlign: 'end' }}>TOTAL: $ {calculateTotal().toLocaleString('es-AR')}</p>
+            <div className={styles.buttonsContainer}>
+                <button style={{ width: '100%', fontSize: '14px' }}>Enviar por whatsapp</button>
+                <button onClick={() => {
+                    setErase(true);
+                    setCarrito([])
+                }}>
+                    <span className={`material-icons ${erase ? styles.erase : ''}`} style={{ fontSize: '20px' }}>replay</span>
+                </button>
+            </div>
+        </div >
+    )
+}

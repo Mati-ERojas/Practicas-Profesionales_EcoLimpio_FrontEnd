@@ -1,0 +1,50 @@
+.container {
+    width: 100%;
+}
+
+.scrolleableWrapper {
+    overflow-x: scroll;
+    width: 100%;
+    transform: rotateX(180deg); /* voltea todo el scroll */
+}
+
+.scrolleableWrapper::-webkit-scrollbar {
+    height: 5px;  /* altura de la barra */
+    background: transparent; /* transparente para que quede encima */
+}
+.scrolleableWrapper::-webkit-scrollbar-thumb {
+    background: var(--blue);
+    border-radius: 5px;
+}
+.scrolleableWrapper::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 30%);
+    border-radius: 5px;
+}
+
+.scrolleable {
+    padding: 10px 0px 10px 0px;
+    display: flex;
+    gap: 20px;
+    width: 100%;       /* ocupar todo el contenedor */
+    transform: rotateX(180deg); /* vuelve a voltear los items */
+}
+
+.categoriaContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 150px;
+    padding: 5px 10px;
+    width: fit-content;
+    background: var(--blue);
+    color: white;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: none;
+    transition: .1s ease-in-out;
+}
+
+.categoriaContainer:hover {
+    cursor: pointer;
+    transform: translateY(-3px);
+}

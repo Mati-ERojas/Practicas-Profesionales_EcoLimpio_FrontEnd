@@ -66,14 +66,22 @@
     width: 25px;
     height: 25px;
     background: var(--red);
-    color: #ffffff;
+    color: white;
 }
 
 .buttonCarrito:hover {
     cursor: pointer;
-    background-color: #ffffff;
+    background-color: white;
 }
 
 .buttonCarrito:hover span{
+    color: black;
+}
+
+.buttonCarrito.active {
+    background-color: white;
+}
+
+.buttonCarrito.active span {
     color: black;
 }

@@ -76,7 +76,7 @@ export const LoginPage = () => {
                     </div>
                     <div className={styles.buttonsContainer}>
                         <button type='submit' className={styles.acceptButton} disabled={!(formik.isValid && formik.dirty) || loading} hidden={loading} >Iniciar sesión</button>
-                        <button disabled={loading} className={styles.cancelButton} onClick={() => { navigateTo("/home") }} hidden={loading} >Cancelar</button>
+                        <button type='button' disabled={loading} className={styles.cancelButton} onClick={() => { navigateTo("/home") }} hidden={loading} >Cancelar</button>
                     </div>
                 </form>
                 <div className={styles.spinner} hidden={!loading}></div>
