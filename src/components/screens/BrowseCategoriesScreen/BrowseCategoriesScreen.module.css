@@ -1,0 +1,160 @@
+.background {
+    width: 100vw;
+    height: 88vh;
+    background: var(--background);
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.sideSection {
+    width: 25%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sideHeader {
+    width: 100%;
+    max-height: 15%;
+    flex:1;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.sideHeader h3 {
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.sideList {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    gap: 10px;
+    overflow: auto;
+}
+.sideList::-webkit-scrollbar {
+    display:none;
+}
+
+.sideList p {
+    color: gray;
+    font-size: 20px;
+    transition: .1s ease-in-out;
+}
+
+.sideList p:hover {
+    color: black;
+    text-decoration: underline;
+    cursor: pointer;
+    transform: translateX(5px);
+}
+
+.activeCategory {
+    color: black !important;
+    text-decoration: underline;
+    transform: translateX(5px);
+}
+
+.content {
+    flex: 1;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.contentHeader {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 15%;
+    flex: 1;
+}
+
+.headerTitle {
+    width: 100%;
+    flex: 1;
+    background: white;
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerTitle h2 {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.headerContent {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: self-end;
+}
+
+.productCount {
+    background: white;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.selectWrapper {
+    display: flex;
+    gap: 5px;
+    background: white;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.selectWrapper select {
+    border: 1px solid rgba(0, 0, 0, 40%);
+}
+
+.selectWrapper select:focus {
+    outline: 2px solid var(--blue);
+}
+
+
+.contentBody {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.contentBody::-webkit-scrollbar {
+    width: 10px;  /* altura de la barra */
+}
+.contentBody::-webkit-scrollbar-thumb {
+    background: var(--blue);
+    border-radius: 5px;
+}
+.contentBody::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 30%);
+    border-radius: 5px;
+}
+
+.noProducts {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    text-align: center;
+}

@@ -7,12 +7,15 @@ import { useCarrito } from '../../../hooks/useCarrito'
 import type { ICarritoItem } from '../../../types/ICarritoItem'
 import { v4 as uuidv4 } from 'uuid'
 import { ProductCardDetailsModal } from '../ProductCardDetailsModal/ProductCardDetailsModal'
+import { useNavigate } from 'react-router-dom'
 
 interface IProductCardProps {
     producto: IProducto
 }
 
 export const ProductCard: FC<IProductCardProps> = ({ producto }) => {
+    const navigate = useNavigate()
+
     const { añadirItem, mensajeNotificacion, color } = useCarrito();
 
     const [activeAddButton, setActiveAddButton] = useState(false);
@@ -58,7 +61,7 @@ export const ProductCard: FC<IProductCardProps> = ({ producto }) => {
     return (
         <div className={styles.cardContainer}>
             <div className={styles.cardContent}>
-                <div className={styles.imgContainer}>
+                <div className={styles.imgContainer} onClick={() => navigate(`/product/${producto.id}`)}>
                     <img src={producto.urlImagen ? producto.urlImagen : noPhoto} height='100%' />
                 </div>
                 <div className={styles.titleContainer}>
