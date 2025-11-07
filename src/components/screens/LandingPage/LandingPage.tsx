@@ -9,8 +9,11 @@ import { ProductCard } from '../../UI/ProductCard/ProductCard';
 import { CarouselProducts } from '../../UI/CarouselProducts/CarouselProducts';
 import { useCategoria } from '../../../hooks/useCategoria';
 import { categoriaStore } from '../../../store/categoriaStore';
+import { useNavigate } from 'react-router-dom';
 
 export const LandingPage = () => {
+    const navigate = useNavigate();
+    const [search, setSearch] = useState('')
 
     const { getProductosHabilitados, getProductosByCategoriaId } = useProducto();
 
@@ -58,9 +61,20 @@ export const LandingPage = () => {
                     <div className={styles.searchContainer}>
                         <span className="material-symbols-outlined">search</span>
                         <input
+                            autoComplete='off'
+                            name='search'
+                            value={search}
                             type="text"
                             className={styles.searchInput}
                             placeholder="¿Qué estás buscando?"
+                            onChange={(e) => {
+                                setSearch(e.target.value)
+                            }}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    navigate(`/browse?search=${search}`)
+                                }
+                            }}
                         />
                     </div>
                     <CategoriesHorizontalList categorias={categorias} />
@@ -70,7 +84,7 @@ export const LandingPage = () => {
                     {productosEnOferta && productosEnOferta.length > 0
                         ?
                         <div className={styles.section}>
-                            <div className={styles.sectionTitle}>
+                            <div className={styles.sectionTitle} onClick={() => navigate('/browse-categories/ofertas')}>
                                 <h3>Productos destacados</h3>
                                 <div className={styles.titleHr}></div>
                             </div>
@@ -88,7 +102,7 @@ export const LandingPage = () => {
                         if (productosCategoria.length === 0) return null;
                         return (
                             <div key={c.id} className={styles.section}>
-                                <div className={styles.sectionTitle}>
+                                <div className={styles.sectionTitle} onClick={() => navigate(`/browse-categories/${c.id}`)}>
                                     <h3>{c.nombre}</h3>
                                     <div className={styles.titleHr}></div>
                                 </div>

@@ -10,6 +10,8 @@ import { validateTokenHttp } from '../http/authHttp'
 import { AdminRoutes } from './AdminRoutes'
 import { SellerRoutes } from './SellerRoutes'
 import { BrowseCategoriesScreen } from '../components/screens/BrowseCategoriesScreen/BrowseCategoriesScreen'
+import { BrowseScreen } from '../components/screens/BrowseScreen/BrowseScreen'
+import { ProductScreen } from '../components/screens/ProductScreen/ProductScreen'
 
 export const AppRouter = () => {
     const usuarioLogged = usuarioStore((state) => state.usuarioLogeado);
@@ -74,7 +76,8 @@ export const AppRouter = () => {
                 <Route path='/home' element={<LandingPage />} />
                 <Route path='/login' element={<LoginPage />} />
                 <Route path='/browse-categories/:category' element={<BrowseCategoriesScreen />} />
-                <Route path='/product/:product' element={<></>} />
+                <Route path='/product/:product' element={<ProductScreen />} />
+                <Route path='/browse' element={<BrowseScreen />} />
                 <Route path='/*'
                     element={
                         usuarioLogged?.rol === "ADMIN" ? (<AdminRoutes />

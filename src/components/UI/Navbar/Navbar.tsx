@@ -1,14 +1,21 @@
 import styles from './Navbar.module.css'
 import Logo from '../../../../public/ecoLimpio-Icon.png'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { navigateTo } from '../../../routes/navigation'
 import { CustomSwal } from '../CustomSwal/CustomSwal'
 import { usuarioStore } from '../../../store/usuarioStore'
 import { DropdownOptionsNavbar } from '../DropdownOptionsNavbar/DropdownOptionsNavbar'
 import { carritoStore } from '../../../store/carritoStore'
 import { ShoppingCartDropdown } from '../ShoppingCartDropdown/ShoppingCartDropdown'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export const Navbar = () => {
+    const navigate = useNavigate();
+    const [search, setSearch] = useState('')
+
+    const location = useLocation();
+    const showSearchBar = location.pathname.includes("/browse") || location.pathname.includes("/product")
+
     const carritoLength = carritoStore((state) => state.carrito.length)
     const [openCarrito, setOpenCarrito] = useState(false)
 
@@ -31,6 +38,8 @@ export const Navbar = () => {
         if (!confirm.isConfirmed) return
         navigateTo('/login')
     }
+
+    useEffect(() => { setSearch('') }, [location])
     return (
         <div className={styles.container}>
             <div className={styles.titleSection} onClick={() => usuarioLogged ? navigateTo("/menu") : navigateTo("/home")}>
@@ -40,6 +49,28 @@ export const Navbar = () => {
                     <h1>Limpio</h1>
                 </div>
             </div>
+
+            {showSearchBar &&
+                <div className={styles.searchContainer}>
+                    <span className="material-symbols-outlined">search</span>
+                    <input
+                        autoComplete='off'
+                        name='search'
+                        value={search}
+                        type="text"
+                        className={styles.searchInput}
+                        placeholder="¿Qué estás buscando?"
+                        onChange={(e) => {
+                            setSearch(e.target.value)
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                navigate(`/browse?search=${search}`)
+                            }
+                        }}
+                    />
+                </div>
+            }
             {usuarioLogged ? (
                 <div className={styles.optionsSection}>
                     <span className={`material-icons ${styles.icons}`} onClick={handleLogout}>logout</span>

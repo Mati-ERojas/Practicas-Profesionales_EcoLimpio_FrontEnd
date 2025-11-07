@@ -26,6 +26,16 @@ export const getProductosHabilitadosHttp = async (): Promise<IProducto[] | undef
     }
 }
 
+export const getProductoByIdHttp = async (productoId: string): Promise<IProducto | undefined> => {
+    try {
+        const response = await axios.get<IProducto>(apiUrlNoAuth + `/${productoId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Problemas en getProductoByIdHttp', error);
+        throw error;
+    }
+}
+
 export const getProductosByCategoriaIdHttp = async (categoriaId: string): Promise<IProducto[] | undefined> => {
     try {
         const response = await axios.get<IProducto[]>(apiUrlNoAuth + `/categorias/${categoriaId}`)
@@ -74,7 +84,7 @@ export const deleteProductoHttp = async (productoId: string): Promise<string | u
         const response = await axiosAuth.delete<string>(apiUrlHttp + `/${productoId}`);
         return response.data;
     } catch (error) {
-        console.error("Problemas en deleteProductoHttp", error)
+        console.error("Problemas en deleteProductoHttp", error);
         throw error;
     }
 }
@@ -84,7 +94,20 @@ export const toggleHabilitadoProductoHttp = async (productoId: string): Promise<
         const response = await axiosAuth.patch(`${apiUrlHttp}/toggle-habilitado/${productoId}`)
         return response.data;
     } catch (error) {
-        console.error('Problemas en toggleHabilitadoProductoHttp', error)
+        console.error('Problemas en toggleHabilitadoProductoHttp', error);
+        throw error;
+    }
+}
+
+export const getProductsBySearchHttp = async (search: string): Promise<IProducto[] | undefined> => {
+    try {
+        const params = new URLSearchParams();
+        if (search) params.append('search', search);
+
+        const response = await axios.get(`${apiUrlNoAuth}/buscar-productos?${params}`)
+        return response.data;
+    } catch (error) {
+        console.error('Problemas en getProductsBySearchHttp', error);
         throw error;
     }
 }

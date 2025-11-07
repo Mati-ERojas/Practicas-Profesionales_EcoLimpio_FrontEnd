@@ -1,6 +1,6 @@
 import { useShallow } from "zustand/shallow"
 import { productoStore } from "../store/productoStore"
-import { createProductoHttp, deleteProductoHttp, getProductosByCategoriaIdHttp, getProductosHabilitadosHttp, getProductosHttp, toggleHabilitadoProductoHttp, updateImagenProductoHttp, updateProductoHttp } from "../http/productoHttp"
+import { createProductoHttp, deleteProductoHttp, getProductoByIdHttp, getProductosByCategoriaIdHttp, getProductosHabilitadosHttp, getProductosHttp, getProductsBySearchHttp, toggleHabilitadoProductoHttp, updateImagenProductoHttp, updateProductoHttp } from "../http/productoHttp"
 import type { IProducto } from "../types/IProducto"
 import { CustomSwal } from "../components/UI/CustomSwal/CustomSwal"
 import type { IMovimiento, TipoMovimiento } from "../types/IMovimiento"
@@ -41,6 +41,17 @@ export const useProducto = () => {
         }
     }
 
+    const getProductoById = async (productoId: string): Promise<IProducto | undefined> => {
+        try {
+            const data = await getProductoByIdHttp(productoId);
+            if (data) {
+                return data;
+            }
+        } catch (error) {
+            console.error('Error en getProductoById', error);
+        }
+    }
+
     const getProductosByCategoriaId = async (categoriaId: string): Promise<IProducto[] | undefined> => {
         try {
             const data = await getProductosByCategoriaIdHttp(categoriaId);
@@ -51,6 +62,19 @@ export const useProducto = () => {
             }
         } catch (error) {
             console.error('Error en getProductosByCategoriaId', error)
+        }
+    }
+
+    const getProductosBySearch = async (search: string): Promise<IProducto[] | undefined> => {
+        try {
+            const data = await getProductsBySearchHttp(search);
+            if (data) {
+                return data;
+            } else {
+                return [];
+            }
+        } catch (error) {
+            console.error('Error en getProductoBySearch', error)
         }
     }
 
@@ -147,7 +171,9 @@ export const useProducto = () => {
     return {
         getProductos,
         getProductosHabilitados,
+        getProductoById,
         getProductosByCategoriaId,
+        getProductosBySearch,
         createProducto,
         updateProducto,
         updateImagenProducto,

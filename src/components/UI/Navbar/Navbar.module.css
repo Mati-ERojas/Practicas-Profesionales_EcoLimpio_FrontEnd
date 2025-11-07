@@ -85,3 +85,36 @@
 .buttonCarrito.active span {
     color: black;
 }
+
+.searchContainer {
+    width: 25%;
+    position: relative;
+    display: inline-block;
+    position: relative;
+    transition: width .3s ease-in-out;
+}
+.searchContainer:focus-within {
+    width: 50%;
+}
+
+.searchContainer span {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: black;
+    pointer-events: none;
+    font-size: 22px;
+}
+
+.searchInput {
+    width: 100%;
+    font-size: 16px;
+    padding: 8px 12px 8px 40px;
+    border: none;
+    border-radius: 20px;
+}
+
+.searchInput:focus {
+    outline: 1px solid rgba(0, 0, 0, 40%);
+}
