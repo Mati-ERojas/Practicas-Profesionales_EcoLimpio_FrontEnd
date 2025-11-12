@@ -1,5 +1,5 @@
 import { CustomSwal } from "../components/UI/CustomSwal/CustomSwal";
-import { agregarCierreCajaHttp, createVentaHttp, getVentasAbiertasHttp } from "../http/ventaHttp"
+import { agregarCierreCajaHttp, createVentaHttp, getVentaConDetallesByIdHttp, getVentasAbiertasHttp } from "../http/ventaHttp"
 import type { ICierreCaja } from "../types/ICierreCaja";
 import type { IVenta } from "../types/IVenta"
 import type { IVentaConDetalles } from "../types/IVentaConDetalles";
@@ -15,6 +15,17 @@ export const useVenta = () => {
         } catch (error) {
             console.error('Error en createVenta', error);
             CustomSwal.fire('Error', 'Hubo un problema al procesar la venta', 'error');
+        }
+    }
+
+    const getVentaConDetallesById = async (ventaId: string): Promise<IVentaConDetalles | undefined> => {
+        try {
+            const data = await getVentaConDetallesByIdHttp(ventaId);
+            if (data) {
+                return data;
+            }
+        } catch (error) {
+            console.error('Error en getVentasConDetallesById', error);
         }
     }
 
@@ -43,6 +54,7 @@ export const useVenta = () => {
     }
     return {
         createVenta,
+        getVentaConDetallesById,
         getVentasAbiertas,
         agregarCierreCaja
     }

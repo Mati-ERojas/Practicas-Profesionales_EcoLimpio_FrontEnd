@@ -15,6 +15,16 @@ export const createVentaHttp = async (venta: IVenta): Promise<IVenta | undefined
     }
 }
 
+export const getVentaConDetallesByIdHttp = async (ventaId: string): Promise<IVentaConDetalles | undefined> => {
+    try {
+        const response = await axiosAuth.get<IVentaConDetalles>(apiUrlHttp + `/con-detalles/${ventaId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Problemas en getVentaConDetallesByIdHttp', error)
+        throw error;
+    }
+}
+
 export const getVentasAbiertasHttp = async (): Promise<IVentaConDetalles[] | undefined> => {
     try {
         const response = await axiosAuth.get<IVentaConDetalles[]>(apiUrlHttp + '/abiertas');

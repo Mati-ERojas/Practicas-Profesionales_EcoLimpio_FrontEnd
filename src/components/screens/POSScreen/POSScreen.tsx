@@ -15,6 +15,7 @@ import { useDetalleVenta } from '../../../hooks/useDetalleVenta'
 import { useMovimiento } from '../../../hooks/useMovimiento'
 import type { IMovimiento, TipoMovimiento } from '../../../types/IMovimiento'
 import { CustomSwal } from '../../UI/CustomSwal/CustomSwal'
+import { generateRecibo } from '../../../hooks/generateRecibo'
 
 interface IFormValues {
     venta: {
@@ -26,7 +27,7 @@ interface IFormValues {
 }
 
 export const POSScreen = () => {
-    const { createVenta } = useVenta()
+    const { createVenta, getVentaConDetallesById } = useVenta()
     const { createDetalleVenta } = useDetalleVenta()
     const { createMovimiento } = useMovimiento()
 
@@ -90,6 +91,13 @@ export const POSScreen = () => {
         }
     }
 
+    const handleGenerateRecibo = async (ventaId: string) => {
+        const ventaCompleta = await getVentaConDetallesById(ventaId)
+        if (ventaCompleta) {
+            generateRecibo(ventaCompleta)
+        }
+    }
+
     const formik = useFormik<IFormValues>({
         enableReinitialize: true,
         initialValues: {
@@ -131,7 +139,18 @@ export const POSScreen = () => {
                     if (!movimientoCreado) throw new Error("Error al crear el movimiento");
                 }
 
-                CustomSwal.fire('Éxito', 'Venta registrada correctamente', 'success')
+                const result = await CustomSwal.fire({
+                    title: 'Venta registrada correctamente',
+                    text: "¿Desea descargar el recibo?",
+                    icon: "success",
+                    showCancelButton: true,
+                    confirmButtonText: "Descargar",
+                    cancelButtonText: "Cancelar"
+                });
+
+                if (result.isConfirmed) {
+                    handleGenerateRecibo(ventaCreada.id!)
+                }
             } catch (error) {
                 console.error(error);
                 CustomSwal.fire('Error', 'Hubo un error al procesar la venta', 'error')

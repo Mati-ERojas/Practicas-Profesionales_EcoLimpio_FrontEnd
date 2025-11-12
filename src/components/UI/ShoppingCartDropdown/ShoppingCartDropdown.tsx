@@ -45,6 +45,33 @@ export const ShoppingCartDropdown = () => {
         return () => clearTimeout(timeout);
     }, [erase]);
 
+    const handleSendToWhatsapp = () => {
+        const fecha = new Date().toLocaleDateString('es-AR');
+        const items = [...carrito];
+        const numero = "5492616452668";
+
+        let mensaje = `📋 *Pedido - ${fecha}*\n\n`;
+
+        mensaje += `🛒 *Productos:*\n`;
+        items.forEach((item) => {
+            mensaje += `\n*${item.producto.titulo}* (SKU: ${item.producto.sku})\n`;
+            mensaje += `Cantidad: ${item.cantidad}\n`;
+            mensaje += `Precio unitario: $${(item.subtotal / item.cantidad).toLocaleString('es-AR')}\n`;
+            mensaje += `*Subtotal: $${item.subtotal.toLocaleString('es-AR')}*\n`;
+            mensaje += `─────────────────\n`;
+        });
+
+        mensaje += `\n💰 *TOTAL DEL PEDIDO:* $${(
+            items.reduce((total, item) => total + item.subtotal, 0)
+        ).toLocaleString('es-AR')}\n\n`;
+
+        mensaje += `¡Gracias por tu compra! 🛍️`;
+
+        const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+
+        window.open(url, "_blank");
+    };
+
     return (
         <div className={styles.dropdownContainer}>
             <h3>Mis Compras</h3>
@@ -83,7 +110,7 @@ export const ShoppingCartDropdown = () => {
             <div className={styles.bigHr} />
             <p style={{ fontWeight: 'bold', fontSize: '14px', textAlign: 'end' }}>TOTAL: $ {calculateTotal().toLocaleString('es-AR')}</p>
             <div className={styles.buttonsContainer}>
-                <button style={{ width: '100%', fontSize: '14px' }}>Enviar por whatsapp</button>
+                <button style={{ width: '100%', fontSize: '14px' }} onClick={() => handleSendToWhatsapp()}>Enviar por whatsapp</button>
                 <button onClick={() => {
                     setErase(true);
                     setCarrito([])
