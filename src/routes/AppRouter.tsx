@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { LoadingScreen } from '../components/screens/LoadingScreen/LoadingScreen'
 import { LandingPage } from '../components/screens/LandingPage/LandingPage'
 import { Navbar } from '../components/UI/Navbar/Navbar'
@@ -14,6 +14,8 @@ import { BrowseScreen } from '../components/screens/BrowseScreen/BrowseScreen'
 import { ProductScreen } from '../components/screens/ProductScreen/ProductScreen'
 
 export const AppRouter = () => {
+    const navigate = useNavigate()
+
     const usuarioLogged = usuarioStore((state) => state.usuarioLogeado);
     const setUsuarioLogeado = usuarioStore((state) => state.setUsuarioLogeado)
     const { getUsuarioById } = useUsuario();
@@ -21,7 +23,7 @@ export const AppRouter = () => {
     const location = useLocation();
 
     // Maneja el acceso a rutas protegidas sin autorización
-    /*useEffect(() => {
+    useEffect(() => {
         const rutasProtegidas = [
             "/menu",
             "/gestion-de-productos",
@@ -33,9 +35,9 @@ export const AppRouter = () => {
         const esRutaProtegida = rutasProtegidas.some((ruta) => location.pathname.startsWith(ruta))
 
         if (!usuarioLogged && esRutaProtegida) {
-            navigateTo("/home")
+            navigate("/home")
         }
-    }, [location.pathname, usuarioLogged]) */
+    }, [location.pathname, usuarioLogged])
 
     // Persiste al usuario loggeado
     useEffect(() => {

@@ -80,5 +80,6 @@ export const generateRecibo = (
     doc.text("Gracias por su compra", 50, finalY + 25, { align: "center" });
     doc.text("Conserve su comprobante", 50, finalY + 30, { align: "center" });
 
-    doc.save(`Recibo_${fecha}.pdf`);
+    const pdfUrl = doc.output('bloburl');
+    window.open(pdfUrl, '_blank');
 };

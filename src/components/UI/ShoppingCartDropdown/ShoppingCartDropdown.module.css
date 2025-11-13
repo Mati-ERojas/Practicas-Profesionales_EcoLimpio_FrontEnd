@@ -147,3 +147,19 @@
         transform: rotate(-360deg);
     }
 }
+
+
+@media (max-width: 900px) {
+    .item {
+        font-size: 12px;
+    }
+    .productInfo {
+        width: 40%;
+    }
+    .inputContainer input {
+        font-size: 12px;
+    }
+    .pSubtotal {
+        width: 20%;
+    }
+}

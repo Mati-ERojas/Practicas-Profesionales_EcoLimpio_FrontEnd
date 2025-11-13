@@ -10,8 +10,11 @@ import { CarouselProducts } from '../../UI/CarouselProducts/CarouselProducts';
 import { useCategoria } from '../../../hooks/useCategoria';
 import { categoriaStore } from '../../../store/categoriaStore';
 import { useNavigate } from 'react-router-dom';
+import { mediaStore } from '../../../store/mediaStore';
 
 export const LandingPage = () => {
+    const isMobile = mediaStore((state) => state.isMobile)
+
     const navigate = useNavigate();
     const [search, setSearch] = useState('')
 
@@ -64,7 +67,8 @@ export const LandingPage = () => {
                             autoComplete='off'
                             name='search'
                             value={search}
-                            type="text"
+                            type="search"
+                            enterKeyHint='search'
                             className={styles.searchInput}
                             placeholder="¿Qué estás buscando?"
                             onChange={(e) => {
@@ -88,11 +92,21 @@ export const LandingPage = () => {
                                 <h3>Productos destacados</h3>
                                 <div className={styles.titleHr}></div>
                             </div>
-                            <CarouselProducts visibleCount={5} >
-                                {productosEnOferta.map((p, i) => (
-                                    <ProductCard key={i} producto={p} />
-                                ))}
-                            </CarouselProducts>
+                            {isMobile
+                                ?
+                                <div style={{ display: 'grid', gridTemplateColumns: productosEnOferta.length > 1 ? 'repeat(2, 1fr)' : '1fr', gap: '10px' }}>
+                                    {productosEnOferta.map((p, i) => (
+                                        <ProductCard key={i} producto={p} />
+                                    ))}
+                                </div>
+                                :
+                                <CarouselProducts visibleCount={5} >
+                                    {productosEnOferta.map((p, i) => (
+                                        <ProductCard key={i} producto={p} />
+                                    ))}
+                                </CarouselProducts>
+                            }
+
                         </div>
                         :
                         <></>
@@ -106,11 +120,21 @@ export const LandingPage = () => {
                                     <h3>{c.nombre}</h3>
                                     <div className={styles.titleHr}></div>
                                 </div>
-                                <CarouselProducts visibleCount={5}>
-                                    {productosCategoria.map((p, i) => (
-                                        <ProductCard key={i} producto={p} />
-                                    ))}
-                                </CarouselProducts>
+                                {isMobile
+                                    ?
+                                    <div style={{ display: 'grid', gridTemplateColumns: productosCategoria.length > 1 ? 'repeat(2, 1fr)' : '1fr', gap: '10px' }}>
+                                        {productosCategoria.map((p, i) => (
+                                            <ProductCard key={i} producto={p} />
+                                        ))}
+                                    </div>
+                                    :
+                                    <CarouselProducts visibleCount={5}>
+                                        {productosCategoria.map((p, i) => (
+                                            <ProductCard key={i} producto={p} />
+                                        ))}
+                                    </CarouselProducts>
+                                }
+
                             </div>
                         );
                     })}

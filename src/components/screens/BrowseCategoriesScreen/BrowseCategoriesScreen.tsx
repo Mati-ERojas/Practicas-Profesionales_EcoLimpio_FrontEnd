@@ -8,8 +8,13 @@ import { useProducto } from '../../../hooks/useProducto'
 import { productoStore } from '../../../store/productoStore'
 import { categoriaStore } from '../../../store/categoriaStore'
 import { ProductCard } from '../../UI/ProductCard/ProductCard'
+import { mediaStore } from '../../../store/mediaStore'
 
 export const BrowseCategoriesScreen = () => {
+    const isMobile = mediaStore((state) => state.isMobile)
+
+    const [showCategories, setShowCategories] = useState(false)
+
     const navigate = useNavigate()
     const { category } = useParams()
     const { getCategoriaById, getCategoriasHabilitadas } = useCategoria()
@@ -102,29 +107,51 @@ export const BrowseCategoriesScreen = () => {
 
     return (
         <div className={styles.background}>
-            <div className={styles.sideSection}>
-                <div className={styles.sideHeader}>
-                    <h3>Categorias</h3>
-                </div>
-                <div className={styles.sideList}>
-                    <p
-                        className={category === 'ofertas' ? styles.activeCategory : ''}
-                        onClick={() => navigate(`/browse-categories/ofertas`)}
-                    >Ofertas</p>
-                    {categoriasHabilitadas.map((c) => (
+            {!isMobile &&
+                <div className={styles.sideSection}>
+                    <div className={styles.sideHeader}>
+                        <h3>Categorias</h3>
+                    </div>
+                    <div className={styles.sideList}>
                         <p
-                            key={c.id}
-                            className={c.id === categoria?.id ? styles.activeCategory : ''}
-                            onClick={() => navigate(`/browse-categories/${c.id}`)}
-                        >{c.nombre}</p>
-                    ))}
+                            className={category === 'ofertas' ? styles.activeCategory : ''}
+                            onClick={() => navigate(`/browse-categories/ofertas`)}
+                        >Ofertas</p>
+                        {categoriasHabilitadas.map((c) => (
+                            <p
+                                key={c.id}
+                                className={c.id === categoria?.id ? styles.activeCategory : ''}
+                                onClick={() => navigate(`/browse-categories/${c.id}`)}
+                            >{c.nombre}</p>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            }
             <div className={styles.content}>
                 <div className={styles.contentHeader}>
-                    <div className={styles.headerTitle}>
-                        <h2>{title.toUpperCase()}</h2>
-                    </div>
+                    {isMobile
+                        ?
+                        <div className={styles.headerTitleMobile} onClick={() => setShowCategories(!showCategories)}>
+                            <h2>{title.toUpperCase()}</h2>
+                            {showCategories ? <span className='material-icons'>keyboard_arrow_up</span> : <span className='material-icons'>keyboard_arrow_down</span>}
+                            {showCategories &&
+                                <div className={styles.categoriesContainer}>
+                                    <p className={category === 'ofertas' ? styles.activeCategory : ''} onClick={() => navigate(`/browse-categories/ofertas`)}>Ofertas</p>
+                                    {categoriasHabilitadas.map((c) => (
+                                        <p
+                                            key={c.id}
+                                            className={c.id === categoria?.id ? styles.activeCategory : ''}
+                                            onClick={() => navigate(`/browse-categories/${c.id}`)}
+                                        >{c.nombre}</p>
+                                    ))}
+                                </div>
+                            }
+                        </div>
+                        :
+                        <div className={styles.headerTitle}>
+                            <h2>{title.toUpperCase()}</h2>
+                        </div>
+                    }
                     <div className={styles.headerContent}>
                         <p className={styles.productCount}>Hay {productos.length} productos</p>
                         <div className={styles.selectWrapper}>

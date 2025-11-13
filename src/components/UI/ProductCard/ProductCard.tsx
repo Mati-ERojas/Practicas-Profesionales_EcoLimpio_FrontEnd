@@ -71,7 +71,7 @@ export const ProductCard: FC<IProductCardProps> = ({ producto }) => {
                     {producto.porcentajeOferta ?
                         <div style={{ width: '100%' }}>
                             <p className={styles.onSalePrice}>$ {producto.precioVenta.toLocaleString('es-AR')}</p>
-                            <p className={styles.onSaleDiscountedPrice}>$ {producto.precioVenta - (producto.precioVenta * (producto.porcentajeOferta / 100))} - {producto.porcentajeOferta}%</p>
+                            <p className={styles.onSaleDiscountedPrice}>$ {(producto.precioVenta - (producto.precioVenta * (producto.porcentajeOferta / 100))).toLocaleString('es-AR')} - {producto.porcentajeOferta}%</p>
                         </div>
                         :
                         <p >$ {producto.precioVenta.toLocaleString('es-AR')}</p>

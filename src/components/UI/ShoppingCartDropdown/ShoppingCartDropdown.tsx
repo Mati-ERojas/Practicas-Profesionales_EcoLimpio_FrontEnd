@@ -4,8 +4,11 @@ import styles from './ShoppingCartDropdown.module.css'
 import type { ICarritoItem } from '../../../types/ICarritoItem'
 import type { IProducto } from '../../../types/IProducto'
 import { useEffect, useState } from 'react'
+import { mediaStore } from '../../../store/mediaStore'
 
 export const ShoppingCartDropdown = () => {
+    const isMobile = mediaStore((state) => state.isMobile)
+
     const { carrito, setCarrito, actualizarItem, eliminarItem } = carritoStore(useShallow((state) => ({
         carrito: state.carrito,
         setCarrito: state.setCarrito,
@@ -96,10 +99,10 @@ export const ShoppingCartDropdown = () => {
                                 />
                                 <span style={{ userSelect: 'none' }} className={styles.inputButton} onClick={() => handleChangeCantidad(item, item.cantidad + 1)}>+</span>
                             </div>
-                            <p style={{ position: 'absolute', left: '60%' }}>Subtotal: $ {item.subtotal.toLocaleString('es-AR')}</p>
+                            <p style={{ position: 'absolute', left: '60%' }} className={styles.pSubtotal}>Subtotal: ${item.subtotal.toLocaleString('es-AR')}</p>
                             <p
                                 className={styles.deleteButton}
-                                style={{ position: 'absolute', left: '90%', color: 'var(--red)', userSelect: 'none' }}
+                                style={isMobile ? { position: 'absolute', left: '85%', color: 'var(--red)', userSelect: 'none' } : { position: 'absolute', left: '90%', color: 'var(--red)', userSelect: 'none' }}
                                 onClick={() => eliminarItem(item.id)}
                             >Eliminar</p>
                         </div>

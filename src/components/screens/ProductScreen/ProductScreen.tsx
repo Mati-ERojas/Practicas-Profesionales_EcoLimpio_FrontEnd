@@ -10,8 +10,11 @@ import { useCarrito } from '../../../hooks/useCarrito';
 import { SlideNotification } from '../../UI/SlideNotification/SlideNotification';
 import { CarouselProducts } from '../../UI/CarouselProducts/CarouselProducts';
 import { ProductCard } from '../../UI/ProductCard/ProductCard';
+import { mediaStore } from '../../../store/mediaStore';
 
 export const ProductScreen = () => {
+    const isMobile = mediaStore((state) => state.isMobile)
+
     const { añadirItem, mensajeNotificacion, color } = useCarrito();
 
     const navigate = useNavigate()
@@ -92,8 +95,8 @@ export const ProductScreen = () => {
         <div className={styles.background}>
             <div className={styles.productContainer}>
                 {producto?.porcentajeOferta && <div className={styles.onSaleTag}>OFERTA</div>}
-                <div style={{ width: '40%' }}>
-                    <img src={producto?.urlImagen ? producto.urlImagen : noPhoto} width='100%' />
+                <div className={styles.imgContainer} >
+                    <img src={producto?.urlImagen ? producto.urlImagen : noPhoto} style={isMobile ? { height: '100%' } : { width: '100%' }} />
                 </div>
                 <div className={styles.productInfo}>
                     <div className={styles.productTitle}>
@@ -124,7 +127,7 @@ export const ProductScreen = () => {
                         <div style={{ flex: 1 }}>
                             <button className={styles.shoppingCartButton} onClick={() => handleAddToShoppingCart()}>
                                 <span style={{ fontSize: '30px' }} className="material-symbols-outlined">add_shopping_cart</span>
-                                <p style={{ fontSize: '20px' }}>AÑADIR AL CARRITO</p>
+                                <p style={isMobile ? { fontSize: '10px' } : { fontSize: '20px' }}>AÑADIR AL CARRITO</p>
                             </button>
                         </div>
                     </div>
@@ -158,11 +161,20 @@ export const ProductScreen = () => {
                             <h3>Productos similares</h3>
                             <div className={styles.titleHr}></div>
                         </div>
-                        <CarouselProducts visibleCount={5}>
-                            {productosCategoria.map((p, i) => (
-                                <ProductCard key={i} producto={p} />
-                            ))}
-                        </CarouselProducts>
+                        {isMobile
+                            ?
+                            <div style={{ display: 'grid', gridTemplateColumns: productosCategoria.length > 1 ? 'repeat(2, 1fr)' : '1fr', gap: '10px' }}>
+                                {productosCategoria.map((p, i) => (
+                                    <ProductCard key={i} producto={p} />
+                                ))}
+                            </div>
+                            :
+                            <CarouselProducts visibleCount={5}>
+                                {productosCategoria.map((p, i) => (
+                                    <ProductCard key={i} producto={p} />
+                                ))}
+                            </CarouselProducts>
+                        }
                     </div>
                 }
                 {productosMarca.length > 0 &&
@@ -171,11 +183,20 @@ export const ProductScreen = () => {
                             <h3>Más de '{producto?.marca}'</h3>
                             <div className={styles.titleHr}></div>
                         </div>
-                        <CarouselProducts visibleCount={5}>
-                            {productosMarca.map((p, i) => (
-                                <ProductCard key={i} producto={p} />
-                            ))}
-                        </CarouselProducts>
+                        {isMobile
+                            ?
+                            <div style={{ display: 'grid', gridTemplateColumns: productosMarca.length > 1 ? 'repeat(2, 1fr)' : '1fr', gap: '10px' }}>
+                                {productosMarca.map((p, i) => (
+                                    <ProductCard key={i} producto={p} />
+                                ))}
+                            </div>
+                            :
+                            <CarouselProducts visibleCount={5}>
+                                {productosMarca.map((p, i) => (
+                                    <ProductCard key={i} producto={p} />
+                                ))}
+                            </CarouselProducts>
+                        }
                     </div>
                 }
             </div>

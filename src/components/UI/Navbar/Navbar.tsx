@@ -8,8 +8,11 @@ import { DropdownOptionsNavbar } from '../DropdownOptionsNavbar/DropdownOptionsN
 import { carritoStore } from '../../../store/carritoStore'
 import { ShoppingCartDropdown } from '../ShoppingCartDropdown/ShoppingCartDropdown'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { mediaStore } from '../../../store/mediaStore'
 
 export const Navbar = () => {
+    const isMobile = mediaStore((state) => state.isMobile)
+
     const navigate = useNavigate();
     const [search, setSearch] = useState('')
 
@@ -44,10 +47,12 @@ export const Navbar = () => {
         <div className={styles.container}>
             <div className={styles.titleSection} onClick={() => usuarioLogged ? navigateTo("/menu") : navigateTo("/home")}>
                 <img className={styles.logo} src={Logo} alt='Logo' />
-                <div className={styles.titleContainer} >
-                    <h1>Eco</h1>
-                    <h1>Limpio</h1>
-                </div>
+                {!(isMobile && showSearchBar) &&
+                    <div className={styles.titleContainer} >
+                        <h1>Eco</h1>
+                        <h1>Limpio</h1>
+                    </div>
+                }
             </div>
 
             {showSearchBar &&
@@ -57,7 +62,8 @@ export const Navbar = () => {
                         autoComplete='off'
                         name='search'
                         value={search}
-                        type="text"
+                        type="search"
+                        enterKeyHint='search'
                         className={styles.searchInput}
                         placeholder="¿Qué estás buscando?"
                         onChange={(e) => {
@@ -78,7 +84,7 @@ export const Navbar = () => {
                 </div>
             ) : (
                 <div className={styles.optionsSection}>
-                    <span className={`material-icons ${styles.icons}`} onClick={handleNavigateToLogin}>login</span>
+                    {!isMobile && <span className={`material-icons ${styles.icons}`} onClick={handleNavigateToLogin}>login</span>}
                     <div className={`${styles.buttonCarrito} ${openCarrito ? styles.active : ''}`} onClick={() => { setOpenCarrito(!openCarrito) }}>
                         <div className={styles.carritoNumber}>{carritoLength}</div>
                         <span className={`material-icons ${styles.icons}`}>shopping_cart</span>

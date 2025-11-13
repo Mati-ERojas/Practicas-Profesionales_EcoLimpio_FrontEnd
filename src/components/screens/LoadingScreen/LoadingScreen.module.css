@@ -34,3 +34,18 @@
     0%   { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+@media (max-width: 900px) {
+    .background {
+        overflow-x: hidden;
+        width: 100vw;
+        height: 100vh;
+        background: var(--gradient);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .content img {
+        scale: 2;
+    }
+}

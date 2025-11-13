@@ -97,6 +97,19 @@
     width: 50%;
 }
 
+@media (max-width: 900px) {
+    .searchContainer {
+        width: 10%;
+        position: relative;
+        display: inline-block;
+        position: relative;
+        transition: width .3s ease-in-out;
+    }
+    .searchContainer:focus-within {
+        width: 1fr;
+    }
+}
+
 .searchContainer span {
     position: absolute;
     top: 50%;
