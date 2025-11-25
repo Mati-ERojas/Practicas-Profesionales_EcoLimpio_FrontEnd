@@ -86,16 +86,10 @@ export const ProductCard: FC<IProductCardProps> = ({ producto }) => {
                         <span className={styles.inputButton} onClick={() => { if (cuantity > 1) setCuantity(cuantity - 1) }}>-</span>
                         <input
                             type='number'
-                            style={{ display: activeAddButton ? '' : 'none' }}
+                            style={{ display: activeAddButton ? '' : 'none', pointerEvents: 'none' }}
                             value={cuantity}
                             min={1}
                             max={producto.stock}
-                            onChange={(e) => {
-                                const value = Number(e.target.value);
-                                if (value >= 1 && value <= producto.stock) {
-                                    setCuantity(value);
-                                }
-                            }}
                         />
                         <span className={styles.inputButton} onClick={() => { if (cuantity < producto.stock) setCuantity(cuantity + 1); }}>+</span>
                     </div>

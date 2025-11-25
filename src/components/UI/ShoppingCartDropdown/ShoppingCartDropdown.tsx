@@ -93,9 +93,7 @@ export const ShoppingCartDropdown = () => {
                                     value={item.cantidad}
                                     min={1}
                                     max={item.producto.stock}
-                                    onChange={(e) => {
-                                        handleChangeCantidad(item, Number(e.target.value))
-                                    }}
+                                    style={{ pointerEvents: 'none' }}
                                 />
                                 <span style={{ userSelect: 'none' }} className={styles.inputButton} onClick={() => handleChangeCantidad(item, item.cantidad + 1)}>+</span>
                             </div>
@@ -109,11 +107,14 @@ export const ShoppingCartDropdown = () => {
                         <hr />
                     </div>
                 ))}
+                {!(carrito.length >= 1) &&
+                    <p>¡No hay productos en el carrito!</p>
+                }
             </div>
             <div className={styles.bigHr} />
             <p style={{ fontWeight: 'bold', fontSize: '14px', textAlign: 'end' }}>TOTAL: $ {calculateTotal().toLocaleString('es-AR')}</p>
             <div className={styles.buttonsContainer}>
-                <button style={{ width: '100%', fontSize: '14px' }} onClick={() => handleSendToWhatsapp()}>Enviar por whatsapp</button>
+                <button style={{ width: '100%', fontSize: '14px' }} disabled={!(carrito.length >= 1)} onClick={() => handleSendToWhatsapp()}>Enviar por whatsapp</button>
                 <button onClick={() => {
                     setErase(true);
                     setCarrito([])

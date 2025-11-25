@@ -109,17 +109,27 @@
 }
 
 .inputWrapper input {
-    width: 30%;
+    width: 10%;
+    text-align: center;
     height: fit-content;
     font-size: 16px;
     padding: 0px 5px;
-    border: 1px solid rgba(0, 0, 0, 40%);
+    border: none;
+    pointer-events: none;
     border-radius: 5px;
 }
 
 .inputWrapper input:focus {
     border:none;
     outline: 2px solid var(--blue);
+}
+
+.inputButton {
+    color: var(--blue);
+    font-weight: bold;
+}
+.inputButton:hover{
+    cursor: pointer;
 }
 
 .shoppingCartButton {
@@ -317,6 +327,7 @@
         font-weight: bold;
         color: black;
     }
+
     .inputWrapper {
         display: flex;
         gap: 10px;
@@ -324,10 +335,12 @@
     }
     .inputWrapper input {
         width: 30%;
+        text-align: center;
         height: fit-content;
-        font-size: 14px;
+        font-size: 16px;
         padding: 0px 5px;
-        border: 1px solid rgba(0, 0, 0, 40%);
+        border: none;
+        pointer-events: none;
         border-radius: 5px;
     }
     .productDetails {

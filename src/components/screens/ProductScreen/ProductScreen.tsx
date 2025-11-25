@@ -110,6 +110,7 @@ export const ProductScreen = () => {
                             </div>
                             <div className={styles.inputWrapper}>
                                 <p>Cantidad:</p>
+                                <span className={styles.inputButton} onClick={() => { if (cuantity > 1) setCuantity(cuantity - 1) }}>-</span>
                                 <input
                                     type='number'
                                     name='cuantity'
@@ -122,6 +123,7 @@ export const ProductScreen = () => {
                                         }
                                     }}
                                 />
+                                <span className={styles.inputButton} onClick={() => { if (cuantity < producto!.stock) setCuantity(cuantity + 1); }}>+</span>
                             </div>
                         </div>
                         <div style={{ flex: 1 }}>
