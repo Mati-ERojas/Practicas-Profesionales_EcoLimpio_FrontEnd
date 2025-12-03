@@ -54,8 +54,8 @@ export const MovementsTable: FC<IMovementsTableProps> = ({ movimientos }) => {
         if (!m.producto) return '-';
         if (m.tipo !== 'VENTA') return `$ ${m.producto.precioCompra.toLocaleString('es-AR')}`;
         if (m.producto.porcentajeOferta) {
-            const precioConOferta = m.producto.precioVenta - (m.producto.precioVenta * (m.producto.porcentajeOferta / 100));
-            return `$ ${precioConOferta.toLocaleString('es-AR')}`;
+            const precioUnitario = m.total! / Math.abs(m.cantidad!)
+            return `$ ${precioUnitario.toLocaleString('es-AR')}`;
         }
         return `$ ${m.producto.precioVenta.toLocaleString('es-AR')}`;
     };

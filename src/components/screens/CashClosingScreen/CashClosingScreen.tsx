@@ -7,11 +7,17 @@ import type { ICierreCaja } from '../../../types/ICierreCaja'
 import { useCierreCaja } from '../../../hooks/useCierreCaja'
 import { CustomSwal } from '../../UI/CustomSwal/CustomSwal'
 import { CashClosingHistory } from '../../UI/CashClosingHistory/CashClosingHistory'
+import { usuarioStore } from '../../../store/usuarioStore'
+import { useMovimiento } from '../../../hooks/useMovimiento'
+import type { IMovimiento, TipoMovimiento } from '../../../types/IMovimiento'
 
 export const CashClosingScreen = () => {
+    const usuarioLogged = usuarioStore((state) => state.usuarioLogeado)
     const { agregarCierreCaja } = useVenta();
     const { createCierreCaja } = useCierreCaja();
     const [cashClosing, setCashClosing] = useState(false);
+
+    const { createMovimiento } = useMovimiento()
 
     const [showHistory, setShowHistory] = useState(false);
 
@@ -85,6 +91,14 @@ export const CashClosingScreen = () => {
             if (allSuccess) {
                 CustomSwal.fire('Éxito', 'Se ha cerrado caja correctamente', 'success')
                 setVentas([])
+                const movimientoValues: IMovimiento = {
+                                tipo: "CIERRECAJA" as TipoMovimiento,
+                                fecha: getFecha(),
+                                cantidad: 0,
+                                total: 0,
+                                usuario: usuarioLogged!,
+                            }
+                            const mSuccess = await createMovimiento(movimientoValues);
             }
         }
         setCashClosing(false)
@@ -95,7 +109,8 @@ export const CashClosingScreen = () => {
                 <h2>Sistema de cierre de caja</h2>
                 <div className={styles.headerButtonsContainer}>
                     <button className={styles.cashClosingButton} onClick={() => handleCerrarCaja()} disabled={!ventas || ventas.length <= 0}>{`Cerrar caja (Total a rendir: $ ${totalARendir.toLocaleString('es-AR')})`}</button>
-                    <button className={styles.showHistoryButton} onClick={() => setShowHistory(!showHistory)}>{showHistory ? 'Ocultar historial' : 'Ver historial de cierres'}</button>
+                    {usuarioLogged?.rol === "ADMIN" &&
+                        <button className={styles.showHistoryButton} onClick={() => setShowHistory(!showHistory)}>{showHistory ? 'Ocultar historial' : 'Ver historial de cierres'}</button>}
                 </div>
             </div>
             <div className={styles.content}>

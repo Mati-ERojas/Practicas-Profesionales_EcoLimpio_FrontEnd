@@ -5,16 +5,40 @@ import { useUsuario } from '../../../hooks/useUsuario'
 import { useFormik } from 'formik'
 import { createUserSchema } from './createUser.schema'
 import type { IUsuario, Rol } from '../../../types/IUsuario'
+import { useShallow } from 'zustand/shallow'
+import { editUserSchema } from './editUser.schema'
 
 export const UsersScreen = () => {
-    const usuarios = usuarioStore((state) => state.usuarios);
-    const { getUsuarios, addUsuario, enableDisableUsuario, deleteUsuario } = useUsuario();
+    const {usuarios, setUsuarioActivo, usuarioActivo} = usuarioStore(useShallow((state) => ({
+        usuarios: state.usuarios,
+        setUsuarioActivo: state.setUsuarioActivo,
+        usuarioActivo: state.usuarioActivo
+    })));
+    const { getUsuarios, addUsuario, enableDisableUsuario, deleteUsuario, updateUsuario } = useUsuario();
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [loading, setLoading] = useState(false)
+
     useEffect(() => {
+        setUsuarioActivo(null);
+        formik.resetForm();
         getUsuarios();
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (usuarioActivo === null) {
+            formik.resetForm();
+        } else {
+            formik.setValues({
+                name: usuarioActivo.nombre,
+                email: usuarioActivo.email,
+                password: '',
+                confirmPassword: '',
+                rol: usuarioActivo.rol
+            });
+        }
+    }, [usuarioActivo]);
+
 
     const handleToggleUsuario = async (idUsuario: string) => {
         enableDisableUsuario(idUsuario)
@@ -23,27 +47,38 @@ export const UsersScreen = () => {
     const handleDeleteUsuario = async (idUsuario: string) => {
         deleteUsuario(idUsuario)
     }
+
+    
+
+
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
             name: "",
             email: "",
             password: "",
             confirmPassword: "",
             rol: "VENTAS"
-        }, validationSchema: createUserSchema,
+        }, validationSchema: usuarioActivo ? editUserSchema : createUserSchema,
         onSubmit: async (values) => {
+
             const formatedValues: IUsuario = {
+                id: usuarioActivo ? usuarioActivo.id : undefined,
                 email: values.email,
                 nombre: values.name,
                 password: values.password,
                 rol: values.rol as Rol
             }
+
             setLoading(true)
-            const success = await addUsuario(formatedValues);
+
+            const success = usuarioActivo ? await updateUsuario(formatedValues) : await addUsuario(formatedValues);
             if (!success) {
                 alert('Datos inválidos. Puede que el correo ya esté en uso')
                 return;
             }
+
+            setUsuarioActivo(null)
             formik.resetForm();
             setLoading(false)
         }
@@ -83,7 +118,10 @@ export const UsersScreen = () => {
                                         check_box_outline_blank
                                     </span>}
                                 </div>
-                                <span className={`material-icons ${styles.delete}`} onClick={() => handleDeleteUsuario(usuario.id!)}> delete </span>
+                                <div className={styles.iconButtonsContainer}>
+                                    <span className={`material-icons ${styles.iconButton}`} onClick={() => setUsuarioActivo(usuario)}> edit </span>
+                                    <span className={`material-icons ${styles.iconButton}`} onClick={() => handleDeleteUsuario(usuario.id!)}> delete </span>
+                                </div>
                             </div>
                         )) : <p>No hay usuarios creados</p>}
                     </div>
@@ -91,7 +129,7 @@ export const UsersScreen = () => {
                 <div className={styles.separador}></div>
                 <div className={styles.formSection}>
                     <div className={styles.sectionHeader}>
-                        <p>Crear usuario</p>
+                        <p>{usuarioActivo ? 'Editar usuario' : 'Crear usuario'}</p>
                     </div>
                     <form className={styles.form} onSubmit={formik.handleSubmit}>
                         <div className={styles.inputsContainer}>
@@ -124,7 +162,7 @@ export const UsersScreen = () => {
                                 )}
                             </div>
                             <div className={styles.inputWrapper}>
-                                <p>Contraseña</p>
+                                <p>{usuarioActivo ? 'Nueva contraseña' : 'Contraseña'}</p>
                                 <input type={showPassword ? 'text' : 'password'}
                                     name='password'
                                     placeholder=''
@@ -172,8 +210,8 @@ export const UsersScreen = () => {
                             </div>
                         </div>
                         <div className={styles.buttonsContainer}>
-                            <button type='submit' className={styles.acceptButton} disabled={!(formik.isValid && formik.dirty) || loading} >Crear usuario</button>
-                            <button type='reset' disabled={loading} className={styles.resetButton} onClick={() => { setErase(true); formik.resetForm() }} >
+                            <button type='submit' className={styles.acceptButton} disabled={!(formik.isValid && formik.dirty) || loading} >{usuarioActivo ? 'Editar usuario' : 'Crear usuario'}</button>
+                            <button type='reset' disabled={loading} className={styles.resetButton} onClick={() => { setErase(true); setUsuarioActivo(null); formik.resetForm() }} >
                                 {loading ? <div className={styles.spinner}></div> : <span className={`material-icons ${erase ? styles.erase : ''}`}>replay</span>}
                             </button>
                         </div>

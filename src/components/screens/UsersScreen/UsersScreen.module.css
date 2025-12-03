@@ -98,14 +98,18 @@
     cursor:pointer;
 }
 
-.delete {
+.iconButtonsContainer {
     position: absolute;
-    justify-content: center;
-    color: var(--blue);
+    display: flex;
     right: 10px;
+    gap: 20px;
 }
 
-.delete {
+.iconButton {
+    color: var(--blue);
+}
+
+.iconButton:hover {
     cursor: pointer;
 }
 

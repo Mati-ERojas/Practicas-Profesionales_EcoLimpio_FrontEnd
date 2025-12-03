@@ -80,6 +80,8 @@ export const useProducto = () => {
 
     const createProducto = async (producto: IProducto): Promise<boolean> => {
         try {
+            const fechaNow = new Date()
+            const fecha =  new Date(fechaNow.getTime() - fechaNow.getTimezoneOffset() * 60000).toISOString().slice(0, -1)
             const data = await createProductoHttp(producto);
             if (data) {
                 añadirProducto(data);
@@ -87,7 +89,7 @@ export const useProducto = () => {
                 if (data.stock > 0) {
                     const movimiento: IMovimiento = {
                         tipo: 'INGRESO' as TipoMovimiento,
-                        fecha: new Date().toISOString().slice(0, -1),
+                        fecha: fecha,
                         cantidad: data.stock,
                         total: data.precioCompra * data.stock,
                         usuario: usuarioLogeado!,

@@ -2,7 +2,7 @@ import { useShallow } from "zustand/shallow"
 import { usuarioStore } from "../store/usuarioStore"
 import type { ILoginRequest } from "../types/ILoginRequest"
 import { loginUsuarioHttp } from "../http/authHttp"
-import { createUsuarioHttp, deleteUsuarioHttp, getUsuarioByEmailHttp, getUsuarioByIdHttp, getUsuariosHttp, toggleHabilitadoUsuarioHttp } from "../http/usuarioHttp"
+import { createUsuarioHttp, deleteUsuarioHttp, getUsuarioByEmailHttp, getUsuarioByIdHttp, getUsuariosHttp, toggleHabilitadoUsuarioHttp, updateUsuarioHttp } from "../http/usuarioHttp"
 import type { IUsuario } from "../types/IUsuario"
 import { CustomSwal } from "../components/UI/CustomSwal/CustomSwal"
 
@@ -67,11 +67,28 @@ export const useUsuario = () => {
             }
 
             añadirUsuario(createdUser);
-            console.log(createdUser)
             getUsuarios();
             return true;
         } catch (error) {
             console.error("Error en addUsuario", error)
+            return false;
+        }
+    }
+
+    const updateUsuario = async (usuario: IUsuario): Promise<boolean> => {
+        try {
+            const updatedUser = await updateUsuarioHttp(usuario)
+    
+            if (!updatedUser) {
+                console.warn("Error al actualizar el usuario.")
+                return false;
+            }
+            CustomSwal.fire('Éxito','Usuario actualizado correctamente','success')
+            actualizarUsuario(updatedUser)
+            getUsuarios()
+            return true;
+        } catch (error) {
+            console.error("Error en updateUsuario", error)
             return false;
         }
     }
@@ -112,6 +129,7 @@ export const useUsuario = () => {
         getUsuarioById,
         getUsuarios,
         addUsuario,
+        updateUsuario,
         enableDisableUsuario,
         deleteUsuario
     }

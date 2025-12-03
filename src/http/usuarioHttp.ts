@@ -43,6 +43,16 @@ export const createUsuarioHttp = async (usuario: IUsuario): Promise<IUsuario | u
     }
 }
 
+export const updateUsuarioHttp = async (usuario: IUsuario): Promise<IUsuario | undefined> => {
+    try {
+        const response = await axiosAuth.put(apiUrlHttp, usuario);
+        return response.data;
+    } catch (error) {
+        console.error("Problemas en updateUsuarioHttp", error)
+        throw error;
+    }
+}
+
 export const toggleHabilitadoUsuarioHttp = async (idUsuario: string): Promise<string | undefined> => {
     try {
         const response = await axiosAuth.patch<string>(`${apiUrlHttp}/toggle-habilitado/${idUsuario}`)

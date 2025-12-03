@@ -27,8 +27,8 @@ export const MovementsScreen = () => {
             if (!m.producto) return '-';
             if (m.tipo !== 'VENTA') return `$ ${m.producto.precioCompra.toLocaleString('es-AR')}`;
             if (m.producto.porcentajeOferta) {
-                const precioConOferta = m.producto.precioVenta - (m.producto.precioVenta * (m.producto.porcentajeOferta / 100));
-                return `$ ${precioConOferta.toLocaleString('es-AR')}`;
+                const precioUnitario = m.total! / Math.abs(m.cantidad!)
+                return `$ ${precioUnitario.toLocaleString('es-AR')}`;
             }
             return `$ ${m.producto.precioVenta.toLocaleString('es-AR')}`;
         };
@@ -139,7 +139,7 @@ export const MovementsScreen = () => {
         <div className={styles.background}>
             <div className={styles.header}>
                 <h2>{usuarioFiltrado ? `Movimientos de: ${usuarioFiltrado.nombre}` : 'Movimientos'}</h2>
-                <p>Total general: $</p>
+                <p>Total general: $ {movimientos.reduce((total, m) => total + (m.total ? m.total : 0), 0).toLocaleString('es-AR')}</p>
                 <form className={styles.headerForm} onSubmit={formik.handleSubmit}>
                     <div className={styles.headerLeft}>
                         <select

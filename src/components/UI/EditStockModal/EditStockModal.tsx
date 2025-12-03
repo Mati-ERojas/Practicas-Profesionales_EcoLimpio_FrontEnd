@@ -44,9 +44,11 @@ export const EditStockModal: FC<IEditStockModalProps> = ({ setOpenModalStock }) 
                 publicId: productoActivo!.publicId,
                 urlImagen: productoActivo!.urlImagen
             }
+            const fechaNow = new Date()
+            const fecha =  new Date(fechaNow.getTime() - fechaNow.getTimezoneOffset() * 60000).toISOString().slice(0, -1)
             const movimientoValues: IMovimiento = {
                 tipo: values.tipoMovimiento as TipoMovimiento,
-                fecha: new Date().toISOString().slice(0, -1),
+                fecha: fecha,
                 cantidad: values.stock!,
                 total: Math.abs(productoActivo!.precioCompra * values.stock!),
                 usuario: usuarioLogeado!,

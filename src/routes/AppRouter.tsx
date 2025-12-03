@@ -24,6 +24,8 @@ export const AppRouter = () => {
 
     // Maneja el acceso a rutas protegidas sin autorización
     useEffect(() => {
+        if (cargandoUsuario) return; // 👈 NO hacer chequeos todavía
+
         const rutasProtegidas = [
             "/menu",
             "/gestion-de-productos",
@@ -32,12 +34,16 @@ export const AppRouter = () => {
             "/movimientos",
             "/gestion-de-usuarios"
         ];
-        const esRutaProtegida = rutasProtegidas.some((ruta) => location.pathname.startsWith(ruta))
+
+        const esRutaProtegida = rutasProtegidas.some((ruta) =>
+            location.pathname.startsWith(ruta)
+        );
 
         if (!usuarioLogged && esRutaProtegida) {
-            navigate("/home")
+            navigate("/home");
         }
-    }, [location.pathname, usuarioLogged])
+    }, [location.pathname, usuarioLogged, cargandoUsuario]);
+
 
     // Persiste al usuario loggeado
     useEffect(() => {

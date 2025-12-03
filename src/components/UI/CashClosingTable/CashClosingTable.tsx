@@ -1,6 +1,8 @@
 import { type FC, useState, useMemo } from "react";
 import styles from "./CashClosingTable.module.css";
 import type { IVentaConDetalles } from "../../../types/IVentaConDetalles";
+import type { ICierreCaja } from "../../../types/ICierreCaja";
+import type { IProducto } from "../../../types/IProducto";
 
 interface ICashClosingTableProps {
     ventas: IVentaConDetalles[];
@@ -57,6 +59,10 @@ export const CashClosingTable: FC<ICashClosingTableProps> = ({ ventas }) => {
         return pages;
     };
 
+    const getPrecioUnitario = (cantidad: number, subtotal:number) => {
+        const precioUnitario = subtotal / cantidad
+        return precioUnitario
+    }
     return (
         <div className={styles.container}>
             <table className={styles.tabla}>
@@ -74,6 +80,7 @@ export const CashClosingTable: FC<ICashClosingTableProps> = ({ ventas }) => {
                 <tbody className={styles.tablaBody}>
                     {currentRows.map((item, i) => {
                         const { venta, producto, cantidad, subtotal } = item;
+                        const precioUnitario = getPrecioUnitario(cantidad, subtotal)
                         const fecha = new Date(venta.fecha);
                         return (
                             <tr key={i}>
@@ -81,7 +88,7 @@ export const CashClosingTable: FC<ICashClosingTableProps> = ({ ventas }) => {
                                 <td>{fecha.toLocaleTimeString('es-AR', { hour12: false, hour: '2-digit', minute: '2-digit' })}</td>
                                 <td>{venta.recibo}</td>
                                 <td>{producto.titulo}</td>
-                                <td>$ {producto.porcentajeOferta ? (producto.precioVenta - (producto.precioVenta * (producto.porcentajeOferta / 100))).toLocaleString('es-AR') : producto.precioVenta.toLocaleString('es-AR')}</td>
+                                <td style={precioUnitario == producto.precioVenta ? {} : {textDecoration:'underline', textDecorationColor:'var(--red)', textUnderlineOffset:'2px'}}>$ {precioUnitario.toLocaleString('es-AR')}</td>
                                 <td>{cantidad}</td>
                                 <td>$ {subtotal.toLocaleString('es-AR')}</td>
                             </tr>

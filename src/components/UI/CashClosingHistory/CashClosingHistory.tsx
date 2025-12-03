@@ -12,9 +12,17 @@ export const CashClosingHistory = () => {
     const [openIds, setOpenIds] = useState<Set<string>>(new Set())
 
     const handleGetCierresCaja = async () => {
-        const cierres = await getCierresCajaConVentas()
-        if (cierres) { setCierresCaja(cierres) } else { setCierresCaja([]) }
+    const cierres = await getCierresCajaConVentas()
+    if (cierres) {
+        const ordenados = [...cierres].sort(
+            (a, b) => new Date(b.fechaHora).getTime() - new Date(a.fechaHora).getTime()
+        )
+        setCierresCaja(ordenados)
+    } else {
+        setCierresCaja([])
     }
+}
+
 
     useEffect(() => {
         handleGetCierresCaja()
@@ -33,11 +41,8 @@ export const CashClosingHistory = () => {
     }
 
     const getPrecioUnitario = (d: IDetalleVenta) => {
-        if (d.producto.porcentajeOferta) {
-            const precioConOferta = d.producto.precioVenta - (d.producto.precioVenta * (d.producto.porcentajeOferta / 100));
-            return `$ ${precioConOferta.toLocaleString('es-AR')}`;
-        }
-        return `$ ${d.producto.precioVenta.toLocaleString('es-AR')}`;
+            const precioUnitario = d.subtotal / d.cantidad
+            return precioUnitario
     };
     return (
         <div className={styles.container}>
@@ -77,7 +82,7 @@ export const CashClosingHistory = () => {
                                             <tr key={d.id}>
                                                 <td>{v.recibo}</td>
                                                 <td>{d.producto.titulo}</td>
-                                                <td>{getPrecioUnitario(d)}</td>
+                                                <td style={getPrecioUnitario(d) == d.producto.precioVenta ? {} : {textDecoration:'underline', textDecorationColor:'var(--red)', textUnderlineOffset:'2px'}}>$ {getPrecioUnitario(d).toLocaleString('es-AR')}</td>
                                                 <td>{d.cantidad}</td>
                                                 <td>$ {d.subtotal.toLocaleString('es-AR')}</td>
                                             </tr>
