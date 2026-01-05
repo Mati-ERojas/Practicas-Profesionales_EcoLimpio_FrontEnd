@@ -29,7 +29,7 @@
     transition: ease-in .1s;
 }
 .imageContainer img {
-    width: 100%;
+    height: 100%;
 }
 .form {
     width: 100%;

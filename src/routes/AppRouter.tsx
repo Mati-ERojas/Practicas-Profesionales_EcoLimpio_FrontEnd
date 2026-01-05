@@ -22,9 +22,10 @@ export const AppRouter = () => {
     const [cargandoUsuario, setCargandoUsuario] = useState(true);
     const location = useLocation();
 
+    
     // Maneja el acceso a rutas protegidas sin autorización
     useEffect(() => {
-        if (cargandoUsuario) return; // 👈 NO hacer chequeos todavía
+        if (cargandoUsuario) return;
 
         const rutasProtegidas = [
             "/menu",
@@ -42,8 +43,16 @@ export const AppRouter = () => {
         if (!usuarioLogged && esRutaProtegida) {
             navigate("/home");
         }
+        if (location.pathname === "/" && !usuarioLogged) {
+            navigate("/home");
+        }
+        if (location.pathname === "/" && usuarioLogged) {
+            navigate("/menu");
+        }
+        if (location.pathname === "/home" && usuarioLogged) {
+            navigate("/menu");
+        }
     }, [location.pathname, usuarioLogged, cargandoUsuario]);
-
 
     // Persiste al usuario loggeado
     useEffect(() => {
@@ -59,16 +68,20 @@ export const AppRouter = () => {
                             setUsuarioLogeado(userLogPersist);
                         } else {
                             console.error("usuario no encontrado")
+                            setUsuarioLogeado(null);
                         }
+                    } else {
+                        setUsuarioLogeado(null);
                     }
                 } else {
                     localStorage.clear();
-                    console.warn("Token inválido. Cerrando sesión")
+                    setUsuarioLogeado(null);
                 }
             } else {
                 localStorage.clear();
-                console.warn("No hay token. Cerrando sesión")
+                setUsuarioLogeado(null);
             }
+
             setCargandoUsuario(false)
         }
         handlePersistUsuarioLoggeado();

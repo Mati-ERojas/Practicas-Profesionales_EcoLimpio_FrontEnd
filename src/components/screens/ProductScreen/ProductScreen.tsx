@@ -96,7 +96,7 @@ export const ProductScreen = () => {
             <div className={styles.productContainer}>
                 {producto?.porcentajeOferta && <div className={styles.onSaleTag}>OFERTA</div>}
                 <div className={styles.imgContainer} >
-                    <img src={producto?.urlImagen ? producto.urlImagen : noPhoto} style={isMobile ? { height: '100%' } : { width: '100%' }} />
+                    <img src={producto?.urlImagen ? producto.urlImagen : noPhoto} style={isMobile ? {maxHeight: '100%' } : { maxWidth: '100%' }} />
                 </div>
                 <div className={styles.productInfo}>
                     <div className={styles.productTitle}>
