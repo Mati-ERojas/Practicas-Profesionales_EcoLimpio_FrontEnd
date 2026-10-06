@@ -43,7 +43,7 @@ export const ProductFormModal: FC<IProductFormModalProp> = ({ setOpenModalProduc
         marca: productoActivo.marca,
         stock: productoActivo.stock,
         porcentajeOferta: productoActivo.porcentajeOferta,
-        categoriaId: productoActivo.categoria.id,
+        categoriaId: productoActivo.categoria ? productoActivo.categoria.id : "",
     }
         :
         {

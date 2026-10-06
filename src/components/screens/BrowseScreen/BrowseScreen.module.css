@@ -117,9 +117,13 @@
         flex: 1;
         gap: 10px;
     }
-    .contentHeader h2 {
-        font-weight: bold;
-        font-size: 18px;
+    .contentHeader h3{
+        white-space: nowrap;
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        height: fit-content;
+        padding: 20px 5px 20px 5px;
     }
     .headerGroup {
         flex: 1;

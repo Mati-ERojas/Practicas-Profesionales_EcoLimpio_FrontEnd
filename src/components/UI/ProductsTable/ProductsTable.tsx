@@ -99,7 +99,7 @@ export const ProductsTable: FC<IProductsTableProps> = ({ productos, setOpenModal
                             <td>{p.titulo}</td>
                             <td>{p.sku}</td>
                             <td>{p.marca}</td>
-                            <td>{p.categoria.nombre}</td>
+                            <td>{p.categoria ? p.categoria.nombre : '-'}</td>
                             <td>$ {p.precioVenta.toLocaleString('es-AR')}</td>
                             <td>$ {p.precioCompra.toLocaleString('es-AR')}</td>
                             <td className={styles.hoverableColumns}>{p.stock}<span className="material-icons" style={{ fontSize: '15px' }} onClick={() => handleEditStock(p)} >
